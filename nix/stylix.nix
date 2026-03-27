@@ -34,6 +34,7 @@
 
     targets = {
       gtk.enable = true;
+      grub.enable = false;
     };
   };
 }

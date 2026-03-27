@@ -1,5 +1,7 @@
 { config, pkgs, ... }:
+
 {
+  stylix.targets.nixvim.enable = true;
   programs.nixvim = {
     enable = true;
 

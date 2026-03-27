@@ -2,6 +2,9 @@
 {
   xdg.configFile."niri/config.kdl".text = ''
     prefer-no-csd
+    hotkey-overlay {
+      skip-at-startup
+    }
 
     input {
       keyboard {
@@ -11,7 +14,6 @@
       }
       touchpad {
         tap
-        natural-scroll
         accel-speed 0.2
       }
     }
