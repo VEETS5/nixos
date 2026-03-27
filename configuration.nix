@@ -101,7 +101,20 @@ in
     neovim
     wl-clipboard
     brightnessctl
-  ];
 
+    rustup
+    pkg-config
+    wayland
+    libxkbcommon
+    gcc
+    wayland-scanner
+    libxkbcommon.dev
+    wayland.dev
+  ];
+  
+  environment.sessionVariables = {
+    PKG_CONFIG_PATH = "/run/current-system/sw/lib/pkgconfig:/run/current-system/sw/share/pkg  config";
+  };
+  
   system.stateVersion = "25.11";
 }
