@@ -10,10 +10,14 @@
     stylix = {
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
-  };
+    };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, stylix, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, stylix, nixvim, ... }@inputs:
   {
     nixosConfigurations = {
 
@@ -24,6 +28,8 @@
           ./hosts/nixpad/hardware-configuration.nix
           ./configuration.nix
 	  stylix.nixosModules.stylix
+          nixvim.nixosModules.nixvim
+	  { networking.hostName = "nixpad"; }
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -40,6 +46,8 @@
           ./hosts/nixtop/hardware-configuration.nix
           ./configuration.nix
 	  stylix.nixosModules.stylix
+	  nixvim.nixosModules.nixvim
+          { networking.hostName = "nixtop"; }
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

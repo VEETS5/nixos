@@ -73,10 +73,10 @@
       XF86MonBrightnessDown { spawn "brightnessctl" "set" "5%-"; }
 
       Mod+Shift+E { quit; }
-      Mod+Shift+R { reload-config; }
     }
 
     spawn-at-startup "mako"
     spawn-at-startup "swww-daemon"
+    spawn-at-startup "sh" "-c" "sleep 1 && swww img /home/vito/Wallpaper/default.png"
   '';
 }

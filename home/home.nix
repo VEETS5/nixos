@@ -5,6 +5,7 @@
     ./foot.nix
     ./niri.nix
     ./mako.nix
+    ./nvim.nix
   ];
   
   #create home dir
@@ -21,7 +22,6 @@
     btop
     ripgrep
     fd
-    neovim
     gh
     vim
   ];
@@ -29,14 +29,5 @@
   programs.home-manager.enable = true;
   
   # create wallpaper dir
-  xdg.userDirs = {
-  enable = true;
-  extraConfig = {
-    XDG_WALLPAPER_DIR = "${config.home.homeDirectory}/Wallpaper";
-  };
-  home.file."Wallpaper/default.png".source = /etc/nixos/wallpapers/default.jpg;
-
-};
-
-
+  home.file."Wallpaper/default.png".source = ../wallpaper/default.png;
 }
