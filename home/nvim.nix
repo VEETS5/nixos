@@ -5,6 +5,10 @@
   programs.nixvim = {
     enable = true;
 
+    extraPlugins = with pkgs.vimPlugins; [
+      plenary-nvim
+    ];
+
     # ── Options ───────────────────────────────────────────────────────────
     opts = {
       number         = true;
@@ -52,7 +56,7 @@
 
     # ── Plugins ───────────────────────────────────────────────────────────
     plugins = {
-
+      extraPlugins = [ pkgs.vimPlugins.plenary-nvim ];
       # Treesitter
       treesitter = {
         enable = true;
@@ -64,7 +68,6 @@
       telescope = {
         enable = true;
       };
-
       # Autopairs
       nvim-autopairs.enable = true;
 
