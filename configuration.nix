@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 let
   hostname  = config.networking.hostName;
@@ -11,12 +11,10 @@ in
   imports = [
     ./nix/steam.nix
     (import ./nix/stylix.nix { inherit pkgs wallpaper; })
+    ./nix/grub.nix
   ];
   # ── Bootloader ──────────────────────────────────────────────────────────────
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
+   boot.loader.efi.canTouchEfiVariables = true;
   # ── Networking ──────────────────────────────────────────────────────────────
   networking.networkmanager.enable = true;
 
@@ -35,7 +33,6 @@ in
   # ── Nix ─────────────────────────────────────────────────────────────────────
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
   # ── GPU ─────────────────────────────────────────────────────────────────────
   hardware.graphics = {
     enable = true;

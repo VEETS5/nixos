@@ -15,6 +15,10 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    minegrub-theme = {
+      url = "github:Lxtharia/minegrub-theme";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, stylix, nixvim, ... }@inputs:
@@ -23,11 +27,12 @@
 
       nixpad = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
+	specialArgs = { inherit inputs; };
         modules = [
           ./hosts/nixpad/hardware-configuration.nix
           ./configuration.nix
 	  stylix.nixosModules.stylix
+	  inputs."minegrub-theme".nixosModules.default
 	  { networking.hostName = "nixpad"; }
           home-manager.nixosModules.home-manager
           {
@@ -41,11 +46,12 @@
 
       nixtop = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
+	specialArgs = { inherit inputs; };
         modules = [
           ./hosts/nixtop/hardware-configuration.nix
           ./configuration.nix
 	  stylix.nixosModules.stylix
+	  inputs."minegrub-theme".nixosModules.default
           { networking.hostName = "nixtop"; }
           home-manager.nixosModules.home-manager
           {
