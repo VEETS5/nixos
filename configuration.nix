@@ -107,6 +107,7 @@ in
     rustup
     pkg-config
     wayland
+    xwayland-satellite
     libxkbcommon
     gcc
     wayland-scanner
