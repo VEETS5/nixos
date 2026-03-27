@@ -34,7 +34,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.vito = import ./home/home.nix;
-            home-manager.sharedModules = [ nixvim.homeManagerModules.nixvim ];
+            home-manager.sharedModules = [ nixvim.homeModules.nixvim ];
           }
         ];
       };
@@ -52,7 +52,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.vito = import ./home/home.nix;
-            home-manager.sharedModules = [ nixvim.homeManagerModules.nixvim ];
+            home-manager.sharedModules = [ nixvim.homeModules.nixvim ];
           }
         ];
       };

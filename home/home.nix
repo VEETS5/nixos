@@ -30,4 +30,7 @@
   
   # create wallpaper dir
   home.file."Wallpaper/default.png".source = ../wallpaper/default.png;
+  
+  #silence gtk warning
+  gtk.gtk4.theme = null;
 }
