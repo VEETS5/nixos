@@ -5,10 +5,12 @@ let
   isLaptop  = hostname == "nixpad";
   isDesktop = hostname == "nixtop";
   gpuType   = if isDesktop then "amd" else "intel";
+  wallpaper = ./wallpaper/default.png;
 in
 {
   imports = [
     ./nix/steam.nix
+    (import ./nix/stylix.nix { inherit pkgs wallpaper; })
   ];
   # ── Bootloader ──────────────────────────────────────────────────────────────
   boot.loader.systemd-boot.enable = true;
