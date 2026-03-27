@@ -23,7 +23,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.vito = import ./home.nix;
+            home-manager.users.vito = import ./home/home.nix;
           }
         ];
       };
@@ -38,7 +38,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.vito = import ./home.nix;
+            home-manager.users.vito = import ./home/home.nix;
           }
         ];
       };
