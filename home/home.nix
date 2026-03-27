@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, vitobar, ... }:
 {
   imports = [
     ./shell.nix
@@ -24,6 +24,8 @@
     fd
     gh
     vim
+    claude-code
+    vitobar.packages.x86_64-linux.default
   ];
 
   programs.home-manager.enable = true;

@@ -19,24 +19,29 @@
       url = "github:Lxtharia/minegrub-theme";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    vitobar = {
+      url = "github:VEETS5/vitobar";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, stylix, nixvim, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, stylix, nixvim, vitobar, ... }@inputs:
   {
     nixosConfigurations = {
 
       nixpad = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-	specialArgs = { inherit inputs; };
+	      specialArgs = { inherit inputs vitobar; };
         modules = [
           ./hosts/nixpad/hardware-configuration.nix
           ./configuration.nix
-	  stylix.nixosModules.stylix
-	  { networking.hostName = "nixpad"; }
+	        stylix.nixosModules.stylix
+	        { networking.hostName = "nixpad"; }
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit vitobar; };
             home-manager.users.vito = import ./home/home.nix;
             home-manager.sharedModules = [ nixvim.homeModules.nixvim ];
           }
@@ -45,16 +50,17 @@
 
       nixtop = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-	specialArgs = { inherit inputs; };
+	      specialArgs = { inherit inputs vitobar; };
         modules = [
           ./hosts/nixtop/hardware-configuration.nix
           ./configuration.nix
-	  stylix.nixosModules.stylix
+	        stylix.nixosModules.stylix
           { networking.hostName = "nixtop"; }
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit vitobar; };
             home-manager.users.vito = import ./home/home.nix;
             home-manager.sharedModules = [ nixvim.homeModules.nixvim ];
           }
