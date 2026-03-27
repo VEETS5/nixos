@@ -11,7 +11,7 @@
     useOSProber = true;
     minegrub-theme = {
       enable = true;
-      background = "dirt.png";
+      background = "background_options/1.16 - [Nether Update].png";
       boot-options-count = 4;
     };
   };
