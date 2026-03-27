@@ -32,7 +32,6 @@
           ./hosts/nixpad/hardware-configuration.nix
           ./configuration.nix
 	  stylix.nixosModules.stylix
-	  inputs."minegrub-theme".nixosModules.default
 	  { networking.hostName = "nixpad"; }
           home-manager.nixosModules.home-manager
           {
@@ -51,7 +50,6 @@
           ./hosts/nixtop/hardware-configuration.nix
           ./configuration.nix
 	  stylix.nixosModules.stylix
-	  inputs."minegrub-theme".nixosModules.default
           { networking.hostName = "nixtop"; }
           home-manager.nixosModules.home-manager
           {
