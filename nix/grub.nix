@@ -11,7 +11,7 @@
     useOSProber = true;
     minegrub-theme = {
       enable = true;
-      background = "background_dirt.png";
+      background = "dirt.png";
       boot-options-count = 4;
     };
   };
