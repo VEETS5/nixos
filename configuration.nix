@@ -7,6 +7,9 @@ let
   gpuType   = if isDesktop then "amd" else "intel";
 in
 {
+  imports = [
+    ./nix/steam.nix
+  ];
   # ── Bootloader ──────────────────────────────────────────────────────────────
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
