@@ -33,6 +33,8 @@ in
   # ── Nix ─────────────────────────────────────────────────────────────────────
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  # Wayland settings
+  programs.xwayland.enable = true;
   # ── GPU ─────────────────────────────────────────────────────────────────────
   hardware.graphics = {
     enable = true;
@@ -101,7 +103,7 @@ in
     neovim
     wl-clipboard
     brightnessctl
-
+    nodejs
     rustup
     pkg-config
     wayland

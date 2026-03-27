@@ -270,7 +270,29 @@
         "minegrub-theme": "minegrub-theme",
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
-        "stylix": "stylix"
+        "stylix": "stylix",
+        "vitobar": "vitobar"
+      }
+    },
+    "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "vitobar",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1774581174,
+        "narHash": "sha256-258qgkMkYPkJ9qpIg63Wk8GoIbVjszkGGPU1wbVHYTk=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "a313afc75b85fc77ac154bf0e62c36f68361fd0b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
       }
     },
     "stylix": {
@@ -415,6 +437,27 @@
       "original": {
         "owner": "tinted-theming",
         "repo": "base16-zed",
+        "type": "github"
+      }
+    },
+    "vitobar": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": "rust-overlay"
+      },
+      "locked": {
+        "lastModified": 1774654254,
+        "narHash": "sha256-h102LUVygznx3u7xgluK+6ughqtJqE6HvOPFgW9o8xc=",
+        "owner": "VEETS5",
+        "repo": "vitobar",
+        "rev": "4dbe441e5f883a56964fe65e54af46a15251fa6b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "VEETS5",
+        "repo": "vitobar",
         "type": "github"
       }
     }

@@ -1,4 +1,7 @@
-{ config, pkgs, ... }:
+{ config, pkgs, vitobar, ... }:
+  let                            
+    vitobarPkg = vitobar.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  in
 {
   xdg.configFile."niri/config.kdl".text = ''
     prefer-no-csd
@@ -80,5 +83,6 @@
     spawn-at-startup "mako"
     spawn-at-startup "swww-daemon"
     spawn-at-startup "sh" "-c" "sleep 1 && swww img /home/vito/Wallpaper/default.png"
+    spawn-at-startup "${vitobarPkg}/bin/vitobar"
   '';
 }
