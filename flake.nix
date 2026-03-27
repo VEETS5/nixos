@@ -7,9 +7,13 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+  };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, stylix, ... }@inputs:
   {
     nixosConfigurations = {
 
@@ -19,6 +23,7 @@
         modules = [
           ./hosts/nixpad/hardware-configuration.nix
           ./configuration.nix
+	  stylix.nixosModules.stylix
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -34,6 +39,7 @@
         modules = [
           ./hosts/nixtop/hardware-configuration.nix
           ./configuration.nix
+	  stylix.nixosModules.stylix
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
