@@ -28,13 +28,13 @@
           ./hosts/nixpad/hardware-configuration.nix
           ./configuration.nix
 	  stylix.nixosModules.stylix
-          nixvim.nixosModules.nixvim
 	  { networking.hostName = "nixpad"; }
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.vito = import ./home/home.nix;
+            home-manager.sharedModules = [ nixvim.homeManagerModules.nixvim ];
           }
         ];
       };
@@ -46,13 +46,13 @@
           ./hosts/nixtop/hardware-configuration.nix
           ./configuration.nix
 	  stylix.nixosModules.stylix
-	  nixvim.nixosModules.nixvim
           { networking.hostName = "nixtop"; }
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.vito = import ./home/home.nix;
+            home-manager.sharedModules = [ nixvim.homeManagerModules.nixvim ];
           }
         ];
       };
