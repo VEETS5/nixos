@@ -26,8 +26,5 @@
     path = "${config.home.homeDirectory}/.config/macchina/nixos.ascii"
   '';
 
-  xdg.configFile."macchina/nixos.ans".source = builtins.path {
-    name = "nixos-ansi";
-    path = ../assets/nixos.ans;
-  };
+  xdg.configFile."macchina/nixos.ans".text = builtins.readFile ../assets/nixos.ans;
 }
