@@ -7,6 +7,7 @@
     ./mako.nix
     ./nvim.nix
     ./nixcord.nix
+    ./macchina.nix
   ];
   
   #create home dir
