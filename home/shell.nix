@@ -8,6 +8,7 @@
       ll   = "ls -la";
       cls  = "clear";
       snvim = "sudo -E nvim";
+      ni = "cd /etc/nixos/";
     };
     initExtra = ''
       export EDITOR=nvim
