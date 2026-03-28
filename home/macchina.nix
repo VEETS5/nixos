@@ -7,5 +7,5 @@
     path = "/home/vito/.config/macchina/nixos.ans"
   '';
 
-  xdg.configFile."macchina/nixos.ans".text = builtins.readFile ../assets/nixos.ans;
+  xdg.configFile."macchina/nixos.ans".source = ../assets/nixos.ans;
 }
