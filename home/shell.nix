@@ -11,7 +11,7 @@
     };
     initExtra = ''
       export EDITOR=nvim
-      macchina
+      macchina --theme nixos
     '';
   };
 }
