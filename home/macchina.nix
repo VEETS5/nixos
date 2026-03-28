@@ -3,7 +3,7 @@
   home.packages = [ pkgs.macchina ];
 
   xdg.configFile."macchina/themes/nixos.toml".text = ''
-    [ascii]
+    [custom_ascii]
     path = "/home/vito/.config/macchina/nixos.ans"
   '';
 
