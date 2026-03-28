@@ -6,6 +6,7 @@
     ./niri.nix
     ./mako.nix
     ./nvim.nix
+    ./nixcord.nix
   ];
   
   #create home dir

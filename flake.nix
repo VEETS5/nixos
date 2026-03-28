@@ -23,9 +23,13 @@
       url = "github:VEETS5/vitobar";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixcord = {
+      url = "github:FlameFlag/nixcord";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, stylix, nixvim, vitobar, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, stylix, nixvim, vitobar, nixcord, ... }@inputs:
   {
     nixosConfigurations = {
 
@@ -43,7 +47,10 @@
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = { inherit vitobar; };
             home-manager.users.vito = import ./home/home.nix;
-            home-manager.sharedModules = [ nixvim.homeModules.nixvim ];
+            home-manager.sharedModules = [ 
+              nixvim.homeModules.nixvim
+              nixcord.homeModules.nixcord
+            ];
           }
         ];
       };
