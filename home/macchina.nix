@@ -26,5 +26,5 @@
     path = "${config.home.homeDirectory}/.config/macchina/nixos.ascii"
   '';
 
-  xdg.configFile."macchina/nixos.ans".source = /etc/nixos/assets/nixos.ans;
+  xdg.configFile."macchina/nixos.ans".source = ../../assets/nixos.ans;
 }
