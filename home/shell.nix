@@ -11,6 +11,7 @@
     };
     initExtra = ''
       export EDITOR=nvim
+      macchina
     '';
   };
 }
