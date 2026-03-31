@@ -69,7 +69,11 @@
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = { inherit vitobar; };
             home-manager.users.vito = import ./home/home.nix;
-            home-manager.sharedModules = [ nixvim.homeModules.nixvim ];
+            home-manager.sharedModules = [ 
+              nixvim.homeModules.nixvim
+              nixcord.homeModules.nixcord  
+            ];
+
           }
         ];
       };

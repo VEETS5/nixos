@@ -19,10 +19,11 @@
         tap
         accel-speed 0.2
       }
+      focus-follows-mouse
     }
 
     layout {
-      gaps 10
+      gaps 5
       preset-column-widths {
         proportion 0.33333
         proportion 0.5
@@ -30,7 +31,7 @@
       }
       default-column-width { proportion 0.5; }
       focus-ring {
-        width 2
+        width 1
         active-color "#719cd6"
         inactive-color "#393b44"
       }
@@ -41,6 +42,7 @@
       Mod+Return { spawn "foot"; }
       Mod+Space  { spawn "fuzzel"; }
       Mod+Q      { close-window; }
+      Mod+W      { spawn "firefox"; }
 
       Mod+H { focus-column-left; }
       Mod+L { focus-column-right; }
