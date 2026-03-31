@@ -40,7 +40,6 @@ in
     enable = true;
     extraPackages = with pkgs;
       if gpuType == "amd" then [
-        amdvlk
         rocmPackages.clr.icd
       ] else [
         intel-media-driver
