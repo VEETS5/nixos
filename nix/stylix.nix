@@ -1,10 +1,10 @@
-{ pkgs,  ... }:
+{ pkgs, wallpaper, ... }:
 {
   stylix = {
     enable = true;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 
-    image = ../wallpaper/default.png;
+    image = wallpaper;
 
     fonts = {
       monospace = {

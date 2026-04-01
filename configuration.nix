@@ -14,7 +14,7 @@ in
     ./nix/grub.nix
   ];
   # ── Bootloader ──────────────────────────────────────────────────────────────
-   boot.loader.efi.canTouchEfiVariables = true;
+   boot.loader.efi.canTouchEfiVariables = false;
   # ── Networking ──────────────────────────────────────────────────────────────
   networking.networkmanager.enable = true;
 
@@ -51,6 +51,7 @@ in
     LIBVA_DRIVER_NAME  = if gpuType == "intel" then "iHD" else "";
     NIXOS_OZONE_WL     = "1";
     MOZ_ENABLE_WAYLAND = "1";
+    PKG_CONFIG_PATH    = "/run/current-system/sw/lib/pkgconfig:/run/current-system/sw/share/pkgconfig";
   };
 
   # ── Niri ────────────────────────────────────────────────────────────────────
@@ -99,6 +100,7 @@ in
     git
     wget
     curl
+    efibootmgr
     neovim
     wl-clipboard
     brightnessctl
@@ -113,10 +115,6 @@ in
     libxkbcommon.dev
     wayland.dev
   ];
-  
-  environment.sessionVariables = {
-    PKG_CONFIG_PATH = "/run/current-system/sw/lib/pkgconfig:/run/current-system/sw/share/pkg  config";
-  };
   
   system.stateVersion = "25.11";
 }

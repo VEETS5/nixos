@@ -1,6 +1,8 @@
-{ config, pkgs, vitobar, ... }:
-  let                            
+{ config, pkgs, vitobar, osConfig, ... }:
+  let
     vitobarPkg = vitobar.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    hostname = osConfig.networking.hostName;
+    isDesktop = hostname == "nixtop";
   in
 {
   xdg.configFile."niri/config.kdl".text = ''
@@ -22,6 +24,17 @@
       focus-follows-mouse
     }
 
+    ${if isDesktop then ''
+    output "DP-1" {
+      mode "2560x1440@240"
+      position x=0 y=0
+    }
+    output "DP-3" {
+      mode "1920x1200@60"
+      position x=2560 y=0
+    }
+    '' else ""}
+
     layout {
       gaps 5
       preset-column-widths {
@@ -40,9 +53,10 @@
 
     binds {
       Mod+Return { spawn "foot"; }
-      Mod+Space  { spawn "fuzzel"; }
+      Mod+Space  { spawn "${vitobarPkg}/bin/vitolauncher"; }
       Mod+Q      { close-window; }
       Mod+W      { spawn "firefox"; }
+      Mod+E      { spawn "dolphin"; }
 
       Mod+H { focus-column-left; }
       Mod+L { focus-column-right; }

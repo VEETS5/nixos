@@ -3,12 +3,12 @@
   programs.bash = {
     enable = true;
     shellAliases = {
-      nrl = "sudo nixos-rebuild switch --flake /etc/nixos#nixpad";
-      nrd = "sudo nixos-rebuild switch --flake /etc/nixos#nixtop";
+      nrl = "sudo nixos-rebuild switch --flake ~/.config/nixos#nixpad";
+      nrd = "sudo nixos-rebuild switch --flake ~/.config/nixos#nixtop";
       ll   = "ls -la";
       cls  = "clear";
       snvim = "sudo -E nvim";
-      ni = "cd /etc/nixos/";
+      ni = "cd ~/.config/nixos/";
     };
     initExtra = ''
       export EDITOR=nvim
