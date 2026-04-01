@@ -17,8 +17,8 @@
   
   home.packages = with pkgs; [
     firefox
-    fuzzel
     swww
+    kdePackages.dolphin
     grim
     slurp
     btop

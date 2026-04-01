@@ -5,10 +5,6 @@
   programs.nixvim = {
     enable = true;
 
-    extraPlugins = with pkgs.vimPlugins; [
-      plenary-nvim
-    ];
-
     # ── Options ───────────────────────────────────────────────────────────
     opts = {
       number         = true;
