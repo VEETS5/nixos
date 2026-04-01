@@ -535,11 +535,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1775063664,
-        "narHash": "sha256-EGTzzrbfqvoKffxv2sp5fRWo1bBWhLqFhiKpdYCdFvY=",
+        "lastModified": 1775073523,
+        "narHash": "sha256-ZOEZntJbqrjnouoUHBWW8aKRArbIG+fpB+8CapJ5Xsg=",
         "owner": "VEETS5",
         "repo": "vitobar",
-        "rev": "b2825abb5e1925ae59d5df90d59b2196d9285b08",
+        "rev": "9a4137fd13243d04a9bc42a47177827f6ef7d948",
         "type": "github"
       },
       "original": {
