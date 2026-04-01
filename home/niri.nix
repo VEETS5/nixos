@@ -60,11 +60,20 @@
 
       Mod+H { focus-column-left; }
       Mod+L { focus-column-right; }
+      ${if isDesktop then ''
+      Mod+J { focus-monitor-left; }
+      Mod+K { focus-monitor-right; }
+      '' else ''
       Mod+J { focus-window-down; }
       Mod+K { focus-window-up; }
+      ''}
 
       Mod+Shift+H { move-column-left; }
       Mod+Shift+L { move-column-right; }
+      ${if isDesktop then ''
+      Mod+Shift+J { move-column-to-monitor-left; }
+      Mod+Shift+K { move-column-to-monitor-right; }
+      '' else ""}
 
       Mod+1 { focus-workspace 1; }
       Mod+2 { focus-workspace 2; }
@@ -92,6 +101,9 @@
       XF86AudioMute         { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
       XF86MonBrightnessUp   { spawn "brightnessctl" "set" "5%+"; }
       XF86MonBrightnessDown { spawn "brightnessctl" "set" "5%-"; }
+
+      Mod+WheelScrollDown cooldown-ms=150 { focus-column-right; }
+      Mod+WheelScrollUp   cooldown-ms=150 { focus-column-left; }
 
       Mod+Shift+E { quit; }
     }
