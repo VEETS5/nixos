@@ -19,6 +19,9 @@
     firefox
     swww
     kdePackages.dolphin
+    kdePackages.ark
+    kdePackages.gwenview
+    gimp
     grim
     slurp
     btop
@@ -28,7 +31,11 @@
     vim
     claude-code
     vitobar.packages.x86_64-linux.default
+    easyeffects
+    lsp-plugins
   ];
+
+  services.easyeffects.enable = true;
 
   programs.home-manager.enable = true;
   

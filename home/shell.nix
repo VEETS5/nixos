@@ -9,6 +9,7 @@
       cls  = "clear";
       snvim = "sudo -E nvim";
       ni = "cd ~/.config/nixos/";
+      vbu = "bash ~/.config/nixos/update-vitobar.sh";
     };
     initExtra = ''
       export EDITOR=nvim

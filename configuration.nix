@@ -12,6 +12,7 @@ in
     ./nix/steam.nix
     (import ./nix/stylix.nix { inherit pkgs wallpaper; })
     ./nix/grub.nix
+    ./nix/greeter.nix
   ];
   # ── Bootloader ──────────────────────────────────────────────────────────────
    boot.loader.efi.canTouchEfiVariables = false;
