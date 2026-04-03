@@ -10,6 +10,7 @@
       snvim = "sudo -E nvim";
       ni = "cd ~/.config/nixos/";
       vbu = "bash ~/.config/nixos/update-vitobar.sh";
+      ncp = "cd ~/.config/nixos && git add -A && git commit -m \"update config\" && git push && cd -";
     };
     initExtra = ''
       export EDITOR=nvim

@@ -45,8 +45,8 @@
       default-column-width { proportion 0.5; }
       focus-ring {
         width 2
-        active-color "#719cd6"
-        inactive-color "#393b44"
+        active-color "#${config.lib.stylix.colors.base0D}"
+        inactive-color "#${config.lib.stylix.colors.base02}"
       }
       border { off; }
     }
@@ -108,6 +108,7 @@
       Mod+Shift+E { quit; }
     }
 
+    spawn-at-startup "systemctl" "--user" "start" "graphical-session.target"
     spawn-at-startup "mako"
     spawn-at-startup "swww-daemon"
     spawn-at-startup "sh" "-c" "sleep 1 && swww img /home/vito/Wallpaper/default.png"

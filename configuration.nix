@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 let
   hostname  = config.networking.hostName;
@@ -53,6 +53,11 @@ in
     NIXOS_OZONE_WL     = "1";
     MOZ_ENABLE_WAYLAND = "1";
     PKG_CONFIG_PATH    = "/run/current-system/sw/lib/pkgconfig:/run/current-system/sw/share/pkgconfig";
+    XDG_DATA_DIRS       = lib.mkForce [
+      "/run/current-system/sw/share"
+      "/home/vito/.nix-profile/share"
+      "/etc/profiles/per-user/vito/share"
+    ];
   };
 
   # ── Niri ────────────────────────────────────────────────────────────────────
