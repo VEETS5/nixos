@@ -21,6 +21,8 @@
     kdePackages.dolphin
     kdePackages.ark
     kdePackages.gwenview
+    kdePackages.kio-extras
+    shared-mime-info
     gimp
     grim
     slurp
