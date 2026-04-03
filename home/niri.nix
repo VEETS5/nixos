@@ -108,7 +108,7 @@
       Mod+Shift+E { quit; }
     }
 
-    spawn-at-startup "systemctl" "--user" "start" "graphical-session.target"
+    spawn-at-startup "systemctl" "--user" "start" "niri-session.service"
     spawn-at-startup "mako"
     spawn-at-startup "swww-daemon"
     spawn-at-startup "sh" "-c" "sleep 1 && swww img /home/vito/Wallpaper/default.png"
