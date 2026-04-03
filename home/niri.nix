@@ -105,6 +105,8 @@
       Mod+WheelScrollDown cooldown-ms=150 { focus-column-right; }
       Mod+WheelScrollUp   cooldown-ms=150 { focus-column-left; }
 
+      Mod+Backslash { spawn "sh" "-c" "pkill -x vitobar || ${vitobarPkg}/bin/vitobar &"; }
+
       Mod+Shift+E { quit; }
     }
 
