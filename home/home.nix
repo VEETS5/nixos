@@ -39,6 +39,23 @@
 
   services.easyeffects.enable = true;
 
+  # Helper service that activates graphical-session.target when niri starts.
+  # Needed because greetd launches niri directly (not via niri.service),
+  # so graphical-session.target never gets pulled in on its own.
+  systemd.user.services.niri-session = {
+    Unit = {
+      Description = "Niri graphical session";
+      BindsTo = [ "graphical-session.target" ];
+      Before = [ "graphical-session.target" ];
+      Wants = [ "graphical-session-pre.target" ];
+      After = [ "graphical-session-pre.target" ];
+    };
+    Service = {
+      Type = "simple";
+      ExecStart = "${pkgs.coreutils}/bin/sleep infinity";
+    };
+  };
+
   programs.home-manager.enable = true;
   
   # create wallpaper dir
