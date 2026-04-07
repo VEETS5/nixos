@@ -68,8 +68,11 @@ in
   # ── Portal ──────────────────────────────────────────────────────────────────
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
-    config.common.default = "*";
+    xdgOpenUsePortal = false;
+    extraPortals = [ pkgs.kdePackages.xdg-desktop-portal-kde ];
+    config.common = {
+      default = [ "kde" ];
+    };
   };
 
   # ── Audio ───────────────────────────────────────────────────────────────────
@@ -97,6 +100,9 @@ in
       emoji     = [ "Noto Color Emoji" ];
     };
   };
+
+  # ── Dolphin dependencies ─────────────────────────────────────────────────────
+  services.udisks2.enable = true;
 
   # ── Laptop-only ─────────────────────────────────────────────────────────────
   services.upower.enable = isLaptop;
