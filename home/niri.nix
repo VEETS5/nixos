@@ -116,8 +116,8 @@
 
     spawn-at-startup "systemctl" "--user" "start" "niri-session.service"
     spawn-at-startup "mako"
-    spawn-at-startup "swww-daemon"
-    spawn-at-startup "sh" "-c" "sleep 1 && swww img /home/vito/Wallpaper/default.png"
+    spawn-at-startup "awww-daemon"
+    spawn-at-startup "sh" "-c" "sleep 1 && awww img /home/vito/Wallpaper/default.png"
     spawn-at-startup "${vitobarPkg}/bin/vitobar"
   '';
 }
