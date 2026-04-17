@@ -33,7 +33,11 @@
       mode "1920x1200@60"
       position x=2560 y=0
     }
-    '' else ""}
+    '' else ''
+    output "eDP-1" {
+      mode "2880x1800@120"
+    }
+    ''}
 
     layout {
       gaps 5
