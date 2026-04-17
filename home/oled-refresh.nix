@@ -3,21 +3,77 @@
 let
   isLaptop = osConfig.networking.hostName == "nixpad";
 
-  oled-refresh = pkgs.writeShellScript "oled-refresh" ''
-    # OLED pixel refresh — cycle solid colors to exercise all subpixels
-    WALLPAPER="$HOME/Wallpaper/default.png"
+  oled-refresh = pkgs.python3Packages.buildPythonApplication {
+    pname = "oled-refresh";
+    version = "1.0";
+    format = "other";
 
-    # Ensure awww daemon is running
-    ${pkgs.awww}/bin/awww query > /dev/null 2>&1 || exit 0
+    nativeBuildInputs = [ pkgs.wrapGAppsHook4 pkgs.gobject-introspection ];
+    buildInputs = [ pkgs.gtk4 ];
+    propagatedBuildInputs = [ pkgs.python3Packages.pygobject3 ];
 
-    for color in FFFFFF FF0000 00FF00 0000FF 000000; do
-      ${pkgs.awww}/bin/awww clear "$color" --transition-type none
-      sleep 2
-    done
+    dontUnpack = true;
+    dontBuild = true;
 
-    # Restore wallpaper
-    ${pkgs.awww}/bin/awww img "$WALLPAPER" --transition-type none
-  '';
+    installPhase = ''
+      mkdir -p $out/bin
+      cat > $out/bin/oled-refresh <<'PYEOF'
+#!/usr/bin/env python3
+import gi
+gi.require_version("Gtk", "4.0")
+from gi.repository import Gtk, GLib, Gdk
+
+COLORS = [
+    (1, 1, 1),
+    (1, 0, 0),
+    (0, 1, 0),
+    (0, 0, 1),
+    (0, 1, 1),
+    (1, 0, 1),
+    (1, 1, 0),
+    (0, 0, 0),
+]
+
+class RefreshWindow(Gtk.ApplicationWindow):
+    def __init__(self, app):
+        super().__init__(application=app)
+        self.color_index = 0
+        self.fullscreen()
+        self.set_cursor(Gdk.Cursor.new_from_name("none"))
+        self.canvas = Gtk.DrawingArea()
+        self.canvas.set_draw_func(self.on_draw)
+        self.set_child(self.canvas)
+        GLib.timeout_add(2000, self.next_color)
+
+    def on_draw(self, area, cr, width, height):
+        r, g, b = COLORS[self.color_index]
+        cr.set_source_rgb(r, g, b)
+        cr.paint()
+
+    def next_color(self):
+        self.color_index += 1
+        if self.color_index >= len(COLORS):
+            self.get_application().quit()
+            return False
+        self.canvas.queue_draw()
+        return True
+
+def on_activate(app):
+    win = RefreshWindow(app)
+    win.present()
+
+app = Gtk.Application(application_id="com.vito.oled-refresh")
+app.connect("activate", on_activate)
+app.run()
+PYEOF
+      chmod +x $out/bin/oled-refresh
+    '';
+
+    dontWrapGApps = false;
+    preFixup = ''
+      makeWrapperArgs+=("''${gappsWrapperArgs[@]}")
+    '';
+  };
 in
 lib.mkIf isLaptop {
   systemd.user.services.oled-refresh = {
@@ -27,7 +83,7 @@ lib.mkIf isLaptop {
     };
     Service = {
       Type = "oneshot";
-      ExecStart = "${oled-refresh}";
+      ExecStart = "${oled-refresh}/bin/oled-refresh";
     };
   };
 
