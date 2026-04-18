@@ -35,6 +35,7 @@
     vitobar.packages.x86_64-linux.default
     easyeffects
     lsp-plugins
+    spotify
   ];
 
   services.easyeffects.enable = true;
