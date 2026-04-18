@@ -36,6 +36,7 @@
     easyeffects
     lsp-plugins
     spotify
+    prismlauncher
   ];
 
   services.easyeffects.enable = true;
