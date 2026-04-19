@@ -34,6 +34,8 @@
     vitobar.packages.x86_64-linux.default
     easyeffects
     lsp-plugins
+    spotify
+    protonup-rs
   ];
 
   services.easyeffects.enable = true;
