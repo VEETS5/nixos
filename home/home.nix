@@ -8,6 +8,7 @@
     ./nvim.nix
     ./nixcord.nix
     ./macchina.nix
+    ./oled-refresh.nix
   ];
   
   #create home dir
@@ -16,7 +17,7 @@
   home.stateVersion  = "25.11";
   
   home.packages = with pkgs; [
-    swww
+    awww
     kdePackages.dolphin
     kdePackages.ark
     kdePackages.gwenview
@@ -36,6 +37,7 @@
     lsp-plugins
     spotify
     protonup-rs
+    prismlauncher
   ];
 
   services.easyeffects.enable = true;
