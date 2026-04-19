@@ -110,6 +110,11 @@
       Mod+Shift+E { quit; }
     }
 
+    window-rule {
+      match app-id=r#"^steam_app_"#
+      open-fullscreen true
+    }
+
     spawn-at-startup "systemctl" "--user" "start" "niri-session.service"
     spawn-at-startup "mako"
     spawn-at-startup "swww-daemon"
