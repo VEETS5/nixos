@@ -16,6 +16,19 @@ in
   ];
   # ── Bootloader ──────────────────────────────────────────────────────────────
    boot.loader.efi.canTouchEfiVariables = false;
+
+  # ── Hibernation ─────────────────────────────────────────────────────────────
+  # amdgpu hangs under s2idle and during runtime PM, which crashes the box
+  # mid-hibernate and leaves no valid image to resume from. Force deep S3 and
+  # disable amdgpu runtime PM on the desktop. Also pass resume= explicitly in
+  # UUID= form so the initramfs finds the swap partition regardless of how
+  # GRUB's os-prober flow rewrites the cmdline.
+  boot.kernelParams = lib.optionals isDesktop [
+    "mem_sleep_default=deep"
+    "amdgpu.runpm=0"
+    "resume=UUID=4c3e969c-424b-4194-ae10-db2fe2f555c3"
+  ];
+
   # ── Networking ──────────────────────────────────────────────────────────────
   networking.networkmanager.enable = true;
 
