@@ -39,6 +39,12 @@
     }
     ''}
 
+    gestures {
+      hot-corners {
+        off
+      }
+    }
+
     layout {
       gaps 5
       preset-column-widths {
