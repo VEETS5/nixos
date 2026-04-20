@@ -21,7 +21,7 @@
         tap
         accel-speed 0.2
       }
-      focus-follows-mouse
+      focus-follows-mouse max-scroll-amount="0%"
     }
 
     ${if isDesktop then ''
