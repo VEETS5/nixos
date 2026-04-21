@@ -133,5 +133,6 @@
     spawn-at-startup "${pkgs.awww}/bin/awww-daemon"
     spawn-at-startup "sh" "-c" "sleep 1 && ${pkgs.awww}/bin/awww img /home/vito/Wallpaper/default.png"
     spawn-at-startup "${vitobarPkg}/bin/vitobar"
+    spawn-at-startup "copyq" "--start-server"
   '';
 }
