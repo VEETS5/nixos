@@ -35,12 +35,14 @@
     vitobar.packages.x86_64-linux.default
     easyeffects
     lsp-plugins
+    playerctl
     spotify
     protonup-rs
     prismlauncher
   ];
 
   services.easyeffects.enable = true;
+  services.playerctld.enable = true;
 
   # Helper service that activates graphical-session.target when niri starts.
   # Needed because greetd launches niri directly (not via niri.service),
