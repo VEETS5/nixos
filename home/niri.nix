@@ -103,8 +103,8 @@
       Mod+Minus   { set-column-width "-10%"; }
       Mod+Equal   { set-column-width "+10%"; }
 
-      Print       { spawn "sh" "-c" "grim - | wl-copy"; }
-      Mod+Shift+S { spawn "sh" "-c" "grim -g \"$(slurp)\" - | wl-copy"; }
+      Print       { spawn "sh" "-c" "f=~/Pictures/screenshot-$(date +%s).png && grim \"$f\" && wl-copy -t image/png < \"$f\""; }
+      Mod+Shift+S { spawn "sh" "-c" "f=~/Pictures/screenshot-$(date +%s).png && grim -g \"$(slurp)\" \"$f\" && wl-copy -t image/png < \"$f\""; }
 
       XF86AudioRaiseVolume  { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%+"; }
       XF86AudioLowerVolume  { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-"; }
