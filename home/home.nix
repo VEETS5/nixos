@@ -36,6 +36,7 @@
     easyeffects
     lsp-plugins
     playerctl
+    copyq
     spotify
     protonup-rs
     prismlauncher
