@@ -103,8 +103,8 @@
       Mod+Minus   { set-column-width "-10%"; }
       Mod+Equal   { set-column-width "+10%"; }
 
-      Print       { screenshot; }
-      Mod+Shift+S { screenshot-window; }
+      Print       { spawn "sh" "-c" "grim - | wl-copy"; }
+      Mod+Shift+S { spawn "sh" "-c" "grim -g \"$(slurp)\" - | wl-copy"; }
 
       XF86AudioRaiseVolume  { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%+"; }
       XF86AudioLowerVolume  { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-"; }
