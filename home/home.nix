@@ -37,6 +37,7 @@
     lsp-plugins
     playerctl
     copyq
+    satty
     spotify
     protonup-rs
     prismlauncher
