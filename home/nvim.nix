@@ -53,13 +53,6 @@
     # ── Plugins ───────────────────────────────────────────────────────────
     plugins = {
       extraPlugins = [ pkgs.vimPlugins.plenary-nvim ];
-      # Treesitter
-      treesitter = {
-        enable = true;
-        highlight.enable = true;
-        indent.enable = true;
-      };
-
       # Telescope
       telescope = {
         enable = true;
