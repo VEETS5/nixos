@@ -47,6 +47,10 @@ in
   # ── Nix ─────────────────────────────────────────────────────────────────────
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  # Lets generic-linux dynamically-linked binaries run (e.g. uv's prebuilt Python).
+  programs.nix-ld.enable = true;
+
   # Wayland settings
   programs.xwayland.enable = true;
   # ── GPU ─────────────────────────────────────────────────────────────────────

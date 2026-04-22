@@ -56,8 +56,8 @@
       # Treesitter
       treesitter = {
         enable = true;
-        settings.highlight.enable = true;
-        settings.indent.enable = true;
+        highlight.enable = true;
+        indent.enable = true;
       };
 
       # Telescope
