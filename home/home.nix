@@ -41,7 +41,8 @@
     spotify
     protonup-rs
     prismlauncher
-    cloudflared 
+    cloudflared
+    jdk
   ];
 
   services.easyeffects.enable = true;
