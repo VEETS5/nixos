@@ -36,7 +36,7 @@ nixos-rebuild build --flake ~/.config/nixos#nixtop
 
 **nix/grub.nix** — GRUB with `efiInstallAsRemovable = true` and systemd-boot force-disabled. This is intentional — do not re-enable systemd-boot or set `canTouchEfiVariables = true`.
 
-**nix/stylix.nix** — Takes `wallpaper` as a function argument (not standard module args). Theme is catppuccin-mocha. GRUB styling is disabled in stylix (minegrub handles it).
+**nix/stylix.nix** — Takes `wallpaper` as a function argument (not standard module args). Theme is everforest-dark-medium. GRUB styling is disabled in stylix (minegrub handles it).
 
 **hosts/**/hardware-configuration.nix** — Machine-specific hardware configs (generated, rarely hand-edited).
 
