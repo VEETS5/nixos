@@ -82,6 +82,21 @@ in
   services.seatd.enable = true;
   security.polkit.enable = true;
 
+  # seatd.service upstream uses Type=notify and bridges seatd's readiness (its
+  # `-n` fd flag) into systemd via `s6-notify-socket-from-fd`. That bridge is
+  # broken under systemd 260.1 (PID1 logs "Extra notification messages sent with
+  # BARRIER=1, ignoring everything"), so systemd never sees seatd reach "ready",
+  # hits TimeoutStartSec=90s, and SIGTERMs seatd. niri is a libseat *client* of
+  # seatd, so when seatd dies niri loses its seat (DRM master + input) and exits
+  # cleanly — which collapses the whole graphical session back to the greeter
+  # every ~90s, with no niri coredump. Run seatd directly as a plain service so
+  # there is no readiness handshake to time out. (seatd creates /run/seatd.sock
+  # immediately on start; niri connects at runtime, so no ordering is lost.)
+  systemd.services.seatd.serviceConfig = {
+    Type = lib.mkForce "simple";
+    ExecStart = lib.mkForce "${lib.getExe' pkgs.seatd "seatd"} -u root -g seat -l info";
+  };
+
   # ── Portal ──────────────────────────────────────────────────────────────────
   xdg.portal = {
     enable = true;

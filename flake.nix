@@ -45,6 +45,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "hm-bak";
             home-manager.extraSpecialArgs = { inherit vitobar; };
             home-manager.users.vito = import ./home/home.nix;
             home-manager.sharedModules = [ 
@@ -67,6 +68,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "hm-bak";
             home-manager.extraSpecialArgs = { inherit vitobar; };
             home-manager.users.vito = import ./home/home.nix;
             home-manager.sharedModules = [ 
