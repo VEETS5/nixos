@@ -43,6 +43,15 @@
     prismlauncher
     cloudflared
     jdk
+
+    # gamescope without the cap_sys_nice setcap wrapper. Steam launches games
+    # under no_new_privs, which forbids gaining file capabilities on exec, so
+    # /run/wrappers/bin/gamescope aborts with "failed to inherit capabilities"
+    # and the game instantly returns to "Play". This plain build runs fine
+    # (only loses realtime scheduling priority). Used in FH6 launch options.
+    (writeShellScriptBin "gamescope-nocap" ''
+      exec ${gamescope}/bin/gamescope "$@"
+    '')
   ];
 
   services.easyeffects.enable = true;
