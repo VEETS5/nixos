@@ -43,6 +43,7 @@
     prismlauncher
     cloudflared
     jdk
+    wlsunset
 
     # gamescope without the cap_sys_nice setcap wrapper. Steam launches games
     # under no_new_privs, which forbids gaining file capabilities on exec, so
