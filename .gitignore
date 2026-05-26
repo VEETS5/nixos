@@ -1,0 +1,14 @@
+# Nix build artifacts
+result
+result-*
+
+# direnv
+.direnv/
+
+# home-manager backup files (from backupFileExtension)
+*.hm-bak
+
+# editor / OS junk
+*~
+*.swp
+.DS_Store
