@@ -27,6 +27,7 @@
       url = "github:FlameFlag/nixcord";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    proton-cachyos.url = "github:powerofthe69/proton-cachyos-nix";
   };
 
   outputs = { self, nixpkgs, home-manager, stylix, nixvim, vitobar, nixcord, ... }@inputs:
