@@ -128,6 +128,11 @@
       open-fullscreen true
     }
 
+    window-rule {
+      match app-id=r#"^gamescope$"#
+      open-fullscreen true
+    }
+
     spawn-at-startup "systemctl" "--user" "start" "niri-session.service"
     spawn-at-startup "mako"
     spawn-at-startup "${pkgs.awww}/bin/awww-daemon"
