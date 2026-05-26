@@ -17,7 +17,7 @@
   home.stateVersion  = "25.11";
   
   home.packages = with pkgs; [
-    awww
+    swww
     kdePackages.dolphin
     kdePackages.ark
     kdePackages.gwenview
