@@ -130,8 +130,8 @@
 
     spawn-at-startup "systemctl" "--user" "start" "niri-session.service"
     spawn-at-startup "mako"
-    spawn-at-startup "${pkgs.awww}/bin/awww-daemon"
-    spawn-at-startup "sh" "-c" "sleep 1 && ${pkgs.awww}/bin/awww img /home/vito/Wallpaper/default.png"
+    spawn-at-startup "${pkgs.swww}/bin/swww-daemon"
+    spawn-at-startup "sh" "-c" "sleep 1 && ${pkgs.swww}/bin/swww img /home/vito/Wallpaper/default.png"
     spawn-at-startup "${vitobarPkg}/bin/vitobar"
     spawn-at-startup "copyq" "--start-server"
   '';
