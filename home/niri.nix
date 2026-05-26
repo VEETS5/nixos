@@ -130,6 +130,7 @@
 
     window-rule {
       match app-id=r#"^gamescope$"#
+      match app-id=r#"^\.gamescope-wrapped$"#
       open-fullscreen true
     }
 
