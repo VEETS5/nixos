@@ -160,6 +160,7 @@ in
     wayland.dev
     swaytools
     swayidle
+    cava
   ];
   
   system.stateVersion = "25.11";
