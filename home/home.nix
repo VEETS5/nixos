@@ -44,7 +44,6 @@
     cloudflared
     jdk
     wlsunset
-    ncspot
 
     # gamescope without the cap_sys_nice setcap wrapper. Steam launches games
     # under no_new_privs, which forbids gaining file capabilities on exec, so
@@ -58,6 +57,19 @@
 
   services.easyeffects.enable = true;
   services.playerctld.enable = true;
+
+  # Terminal Spotify client (replaces ncspot). The default pkgs.spotify-player
+  # already builds with image + sixel + streaming enabled, and the default
+  # rodio audio backend goes through ALSA -> the PipeWire we already run, so it
+  # adds no new audio deps (alsa-lib is already in the closure).
+  programs.spotify-player = {
+    enable = true;
+    settings = {
+      # Real-time 64-band frequency bar chart in the playback window. Off by
+      # default; needs the streaming feature (on) + local librespot playback.
+      enable_audio_visualization = true;
+    };
+  };
 
   # Helper service that activates graphical-session.target when niri starts.
   # Needed because greetd launches niri directly (not via niri.service),
