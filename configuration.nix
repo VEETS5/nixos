@@ -158,6 +158,7 @@ in
     wayland-scanner
     libxkbcommon.dev
     wayland.dev
+    swaytools
   ];
   
   system.stateVersion = "25.11";

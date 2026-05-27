@@ -25,6 +25,28 @@ let
     mkdir -p "$out/.config/stylix"
     cp ${palette} "$out/.config/stylix/palette.json"
   '';
+
+  # vitogreeter draws itself as a wlr-layer-shell surface (src/greeter/main.rs binds
+  # zwlr_layer_shell_v1 with .expect("layer shell")). cage is a kiosk compositor with
+  # no layer-shell, so under cage the greeter panics with "layer shell: NotPresent" at
+  # startup and greetd crash-loops. Host it under niri instead — this system's actual
+  # compositor, which implements layer-shell. (cage worked only until vitobar's greeter
+  # switched from xdg-shell to a layer surface.)
+  #
+  # Unlike cage, niri does not exit when a spawned child exits, so the wrapper quits niri
+  # once vitogreeter returns. This reproduces cage's semantics for both paths: a
+  # successful login (vitogreeter exits → niri quits → greetd starts the user session)
+  # and a crash (greeter exits → greetd restarts it).
+  niriPkg = config.programs.niri.package;
+  niriGreeterConfig = pkgs.writeText "niri-greeter.kdl" ''
+    spawn-at-startup "${pkgs.bash}/bin/bash" "-c" "${vitobarPkg}/bin/vitogreeter; ${niriPkg}/bin/niri msg action quit --skip-confirmation"
+
+    prefer-no-csd
+
+    hotkey-overlay {
+        skip-at-startup
+    }
+  '';
 in
 {
   users.users.greeter.extraGroups = [ "seat" "video" ];
@@ -33,7 +55,7 @@ in
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.coreutils}/bin/env HOME=${greeterHome} ${pkgs.cage}/bin/cage -s -- ${vitobarPkg}/bin/vitogreeter";
+        command = "${pkgs.coreutils}/bin/env HOME=${greeterHome} ${niriPkg}/bin/niri -c ${niriGreeterConfig}";
         user = "greeter";
       };
     };
