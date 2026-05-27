@@ -159,6 +159,7 @@ in
     libxkbcommon.dev
     wayland.dev
     swaytools
+    swayidle
   ];
   
   system.stateVersion = "25.11";
