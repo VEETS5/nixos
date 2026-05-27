@@ -67,6 +67,8 @@
       Mod+Q      { close-window; }
       Mod+W      { spawn "firefox"; }
       Mod+E      { spawn "dolphin"; }
+      Mod+P      { spawn "foot" "spotify-player"; }
+      Mod+S      { spawn "steam"; }
 
       Mod+H { focus-column-left; }
       Mod+L { focus-column-right; }
