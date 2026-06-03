@@ -161,6 +161,9 @@ in
     swaytools
     swayidle
     cava
+    unzip
+    glib
+    protontricks
   ];
   
   system.stateVersion = "25.11";
