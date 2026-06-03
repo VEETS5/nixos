@@ -35,6 +35,7 @@
     targets = {
       gtk.enable = true;
       grub.enable = false;
+      kmscon.enable = false;
     };
   };
 }

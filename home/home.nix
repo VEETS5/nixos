@@ -22,6 +22,7 @@
     kdePackages.ark
     kdePackages.gwenview
     kdePackages.kio-extras
+    haruna
     shared-mime-info
     gimp
     grim
@@ -44,7 +45,6 @@
     cloudflared
     jdk
     wlsunset
-
     # gamescope without the cap_sys_nice setcap wrapper. Steam launches games
     # under no_new_privs, which forbids gaining file capabilities on exec, so
     # /run/wrappers/bin/gamescope aborts with "failed to inherit capabilities"
@@ -143,7 +143,4 @@
   
   # create wallpaper dir
   home.file."Wallpaper/default.png".source = ../wallpaper/default.png;
-  
-  #silence gtk warning
-  gtk.gtk4.theme = null;
 }

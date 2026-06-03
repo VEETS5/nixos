@@ -11,6 +11,7 @@
       ni = "cd ~/.config/nixos/";
       vbu = "bash ~/.config/nixos/update-vitobar.sh";
       ncp = "cd ~/.config/nixos && git add -A && git commit -m \"update config\" && git push && cd -";
+      claude-latest = "$HOME/.local/bin/claude";
     };
     initExtra = ''
       export EDITOR=nvim
