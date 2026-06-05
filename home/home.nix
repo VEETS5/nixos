@@ -18,10 +18,19 @@
   
   home.packages = with pkgs; [
     swww
-    kdePackages.dolphin
-    kdePackages.ark
-    kdePackages.gwenview
-    kdePackages.kio-extras
+    # ── KDE application suite (apps only — no Plasma desktop) ──────────────────
+    kdePackages.dolphin          # file manager
+    kdePackages.ark              # archive manager
+    kdePackages.gwenview         # image viewer
+    kdePackages.okular           # PDF / document viewer
+    kdePackages.kate             # text editor
+    kdePackages.kcalc            # calculator
+    kdePackages.kdialog          # native KDE dialogs for scripts/CLI
+    kdePackages.filelight        # disk-usage visualiser
+    kdePackages.spectacle        # screenshot tool
+    kdePackages.kio-extras       # extra KIO protocols (mtp:/, sftp:/, etc.)
+    kdePackages.kimageformats    # webp/avif/heif thumbnails in Dolphin/Gwenview
+    kdePackages.qtsvg            # SVG rendering for KDE app icons/thumbnails
     haruna
     shared-mime-info
     gimp
@@ -42,6 +51,7 @@
     spotify
     protonup-rs
     prismlauncher
+    r2modman
     cloudflared
     jdk
     wlsunset

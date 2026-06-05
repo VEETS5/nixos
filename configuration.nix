@@ -69,6 +69,11 @@ in
     LIBVA_DRIVER_NAME  = if gpuType == "intel" then "iHD" else "";
     NIXOS_OZONE_WL     = "1";
     MOZ_ENABLE_WAYLAND = "1";
+    # Force GTK apps (Steam, etc.) to route their file dialogs through the xdg
+    # portal instead of drawing their own bundled GTK file chooser — without
+    # this, Steam's "Add Non-Steam Game / Browse" ignores the portal entirely
+    # and shows the GNOME-style picker regardless of the portal config above.
+    GTK_USE_PORTAL     = "1";
     PKG_CONFIG_PATH    = "/run/current-system/sw/lib/pkgconfig:/run/current-system/sw/share/pkgconfig";
     XDG_DATA_DIRS       = lib.mkForce [
       "/run/current-system/sw/share"
@@ -102,8 +107,23 @@ in
     enable = true;
     xdgOpenUsePortal = false;
     extraPortals = [ pkgs.kdePackages.xdg-desktop-portal-kde ];
-    config.common = {
-      default = [ "kde" ];
+    # niri's package ships its own niri-portals.conf (default=gnome;gtk). Because
+    # XDG_CURRENT_DESKTOP=niri, xdg-desktop-portal loads that desktop-specific
+    # file *first*, so it overrides `config.common` and forces the GTK/GNOME file
+    # picker no matter what we set there. We override the niri config here: NixOS
+    # writes it to /etc/xdg/xdg-desktop-portal/niri-portals.conf, which wins over
+    # the copy in the niri package's /share. FileChooser -> KDE (Dolphin-style
+    # dialog); ScreenCast/Screenshot stay on gnome so niri screen-sharing keeps
+    # working; secrets stay on gnome-keyring (the running keyring daemon).
+    config = {
+      common.default = [ "kde" ];
+      niri = {
+        default = [ "gnome" "gtk" ];
+        "org.freedesktop.impl.portal.FileChooser" = [ "kde" ];
+        "org.freedesktop.impl.portal.Access" = [ "gtk" ];
+        "org.freedesktop.impl.portal.Notification" = [ "gtk" ];
+        "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
+      };
     };
   };
 
