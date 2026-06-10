@@ -26,9 +26,9 @@
     };
 
   fileSystems."/mnt/hdd" =
-    { device = "/dev/disk/by-uuid/0A5CCE9B5CCE8145";
-      fsType = "ntfs3";
-      options = [ "rw" "uid=1000" "gid=100" "umask=0022" ];
+    { device = "/dev/disk/by-uuid/592c313a-ab2c-4913-8871-5e4a2f9a5d86";
+      fsType = "ext4";
+      options = [ "defaults" "nofail" ];
     };
 
   swapDevices =
