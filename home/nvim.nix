@@ -51,8 +51,8 @@
     ];
 
     # ── Plugins ───────────────────────────────────────────────────────────
+    extraPlugins = [ pkgs.vimPlugins.plenary-nvim ];
     plugins = {
-      extraPlugins = [ pkgs.vimPlugins.plenary-nvim ];
       # Telescope
       telescope = {
         enable = true;

@@ -69,6 +69,7 @@
       Mod+E      { spawn "dolphin"; }
       Mod+P      { spawn "foot" "spotify_player"; }
       Mod+S      { spawn "steam"; }
+      Mod+V      { spawn "vesktop"; }
 
       Mod+H { focus-column-left; }
       Mod+L { focus-column-right; }
