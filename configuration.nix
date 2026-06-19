@@ -184,6 +184,7 @@ in
     unzip
     glib
     protontricks
+    davinci-resolve
   ];
   
   system.stateVersion = "25.11";
