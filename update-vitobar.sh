@@ -22,6 +22,16 @@ nix flake update vitobar
 echo "==> Rebuilding NixOS ($HOST)..."
 sudo nixos-rebuild switch --flake "$NIXOS_DIR#$HOST"
 
+echo "==> Pushing updated flake.lock..."
+cd "$NIXOS_DIR"
+git add flake.lock
+if git diff --cached --quiet; then
+    echo "    flake.lock unchanged, skipping."
+else
+    git commit -m "update vitobar flake input"
+    git push
+fi
+
 echo "==> Restarting vitobar..."
 pkill -x vitobar || true
 sleep 0.5
