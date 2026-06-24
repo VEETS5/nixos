@@ -11,7 +11,7 @@
         ignoreActivities = {
           enable = true;
           ignorePlaying = true;
-          ignoredActivities = {};
+          ignoredActivities = [];
         };
       };
     };
