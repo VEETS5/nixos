@@ -19,18 +19,11 @@
       }
       touchpad {
         tap
-        // drag-lock is the fix for "drag/highlight stops when I didn't lift my
-        // finger" and "holding click in Minecraft keeps releasing": once a
-        // drag/hold starts, a brief loss of contact no longer ends it — you
-        // stay held down until you deliberately tap again to release.
+        // drag-lock = the sticky tap-and-drag: once a drag/hold starts, a brief
+        // lift won't end it — you tap once to release. (drag-lock requires drag.)
         drag true
         drag-lock
-        // disable-while-typing: stops the cursor jumping / clicks misfiring
-        // from your palm brushing the pad while you type, which also breaks drags.
-        dwt
         accel-speed 0.2
-        // scroll was too fast; <1.0 slows two-finger scroll. Tune 0.3–0.7 to taste.
-        scroll-factor 0.5
       }
       focus-follows-mouse max-scroll-amount="0%"
     }
