@@ -24,6 +24,14 @@ let
   xpanel = pkgs.appimageTools.wrapType2 {
     inherit pname version src;
 
+    # Electron runtime libs not in appimageTools' default FHS env.
+    extraPkgs = pkgs: with pkgs; [
+      xorg.libxshmfence
+      libGL
+      libdrm
+      mesa
+    ];
+
     extraInstallCommands = ''
       install -Dm444 ${appimageContents}/${pname}.desktop \
         $out/share/applications/${pname}.desktop
