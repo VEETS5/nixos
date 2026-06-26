@@ -13,6 +13,7 @@ in
     (import ./nix/stylix.nix { inherit pkgs wallpaper; })
     ./nix/grub.nix
     ./nix/greeter.nix
+    ./nix/wireguard.nix
   ];
   # ── Bootloader ──────────────────────────────────────────────────────────────
    boot.loader.efi.canTouchEfiVariables = false;
