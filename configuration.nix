@@ -14,6 +14,7 @@ in
     ./nix/grub.nix
     ./nix/greeter.nix
     ./nix/wireguard.nix
+    ./nix/xpanel.nix
   ];
   # ── Bootloader ──────────────────────────────────────────────────────────────
    boot.loader.efi.canTouchEfiVariables = false;
