@@ -33,6 +33,13 @@ in
 
   # ── Networking ──────────────────────────────────────────────────────────────
   networking.networkmanager.enable = true;
+  # Use iwd as the wifi backend instead of wpa_supplicant: more modern, smarter
+  # background scanning (wpa_supplicant's off-channel roam scans caused periodic
+  # latency spikes / rubber-banding on the ath12k WiFi 7 card).
+  networking.networkmanager.wifi.backend = "iwd";
+  # Disable wifi power saving: the radio dozing between beacons added latency
+  # spikes/jitter that hurt online games. Keep the link hot.
+  networking.networkmanager.wifi.powersave = false;
 
   # ── Locale ──────────────────────────────────────────────────────────────────
   time.timeZone = "America/Chicago";
