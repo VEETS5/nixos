@@ -40,6 +40,13 @@ in
   # Disable wifi power saving: the radio dozing between beacons added latency
   # spikes/jitter that hurt online games. Keep the link hot.
   networking.networkmanager.wifi.powersave = false;
+  # Steer iwd off the 6GHz band. iwd does its own BSS selection and ignores
+  # NetworkManager's per-profile BSSID lock, so it kept associating to a weak
+  # 6GHz AP (~54/100 signal, 65 Mbit/s) → huge local-link ping jitter
+  # (gateway RTT min 1.8ms / avg 25ms / max 145ms). 5GHz penetrates better and
+  # is rock-steady here. 0.0 disables the band in iwd's ranking; use 0.5 if you
+  # want 6GHz kept only as a last-resort fallback.
+  networking.wireless.iwd.settings.Rank.BandModifier6GHz = 0.0;
 
   # ── Locale ──────────────────────────────────────────────────────────────────
   time.timeZone = "America/Chicago";
