@@ -31,7 +31,6 @@
     ${if isDesktop then ''
     output "DP-1" {
       mode "2560x1440@240"
-      variable-refresh-rate
       position x=0 y=0
     }
     output "DP-3" {
