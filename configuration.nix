@@ -19,6 +19,16 @@ in
   # ── Bootloader ──────────────────────────────────────────────────────────────
    boot.loader.efi.canTouchEfiVariables = false;
 
+  # ── Kernel / WiFi driver ────────────────────────────────────────────────────
+  # Track the latest mainline kernel for the freshest ath12k WiFi 7 driver. The
+  # WCN7850 card's ath12k support is still maturing and improves notably release
+  # over release (latency/jitter, power mgmt, MLO fixes); 6.18 → 7.1 is a large
+  # jump. If a newer kernel ever regresses amdgpu or boot, pick the previous
+  # generation in GRUB to roll back instantly.
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # Pull in all redistributable firmware blobs (newest ath12k/QCA firmware).
+  hardware.enableRedistributableFirmware = true;
+
   # ── Hibernation ─────────────────────────────────────────────────────────────
   # amdgpu hangs under s2idle and during runtime PM, which crashes the box
   # mid-hibernate and leaves no valid image to resume from. Force deep S3 and
@@ -39,7 +49,25 @@ in
   networking.networkmanager.wifi.backend = "iwd";
   # Disable wifi power saving: the radio dozing between beacons added latency
   # spikes/jitter that hurt online games. Keep the link hot.
+  #
+  # NOTE: networking.networkmanager.wifi.powersave only takes effect with the
+  # wpa_supplicant backend. We use the iwd backend (below), which manages the
+  # device directly and IGNORES this option — it silently never reaches the live
+  # NetworkManager.conf, and iwd leaves 802.11 power save ON. Symptom: a perfect
+  # link (-41 dBm, 1200 Mbit/s, 0 retries) but gateway ping avg ~50ms / max 200ms+
+  # because the radio sleeps between beacons → in-game lag. We keep this line as
+  # documentation but enforce it for real with the dispatcher script below.
   networking.networkmanager.wifi.powersave = false;
+  # Backend-independent enforcement: on every interface "up" event, force the
+  # driver's power save off. NetworkManager fires dispatcher scripts on connect
+  # regardless of backend, and this runs AFTER iwd associates, so it overrides
+  # whatever iwd set. iw errors harmlessly on non-wifi interfaces (|| true).
+  networking.networkmanager.dispatcherScripts = [{
+    type = "basic";
+    source = pkgs.writeShellScript "wifi-powersave-off" ''
+      [ "$2" = "up" ] && ${pkgs.iw}/bin/iw dev "$1" set power_save off 2>/dev/null || true
+    '';
+  }];
   # Steer iwd off the 6GHz band. iwd does its own BSS selection and ignores
   # NetworkManager's per-profile BSSID lock, so it kept associating to a weak
   # 6GHz AP (~54/100 signal, 65 Mbit/s) → huge local-link ping jitter
@@ -181,6 +209,7 @@ in
     wget
     curl
     efibootmgr
+    iw
     neovim
     wl-clipboard
     brightnessctl
