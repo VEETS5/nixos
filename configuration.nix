@@ -85,7 +85,7 @@ in
   users.users.vito = {
     isNormalUser = true;
     description  = "Vito Torina";
-    extraGroups  = [ "networkmanager" "wheel" "seat" "video" "audio" "input" ];
+    extraGroups  = [ "networkmanager" "wheel" "seat" "video" "audio" "input" "docker" ];
   };
 
   # ── Nix ─────────────────────────────────────────────────────────────────────
@@ -200,6 +200,13 @@ in
   # ── Dolphin dependencies ─────────────────────────────────────────────────────
   services.udisks2.enable = true;
 
+  # ── Containers / local dev services ─────────────────────────────────────────
+  # Docker Engine for project docker-compose stacks (e.g. golfpicker's Postgres +
+  # Redis via `pnpm db:up`). `vito` is in the `docker` group above so the CLI
+  # works without sudo. The `docker-compose` package (Compose V2) drops its
+  # cli-plugin into the profile so `docker compose ...` resolves.
+  virtualisation.docker.enable = true;
+
   # ── Laptop-only ─────────────────────────────────────────────────────────────
   services.upower.enable = isLaptop;
 
@@ -214,6 +221,9 @@ in
     wl-clipboard
     brightnessctl
     nodejs
+    corepack          # provides pnpm/yarn shims; golfpicker pins pnpm@11.9.0
+    pnpm              # baseline pnpm on PATH (corepack fetches the pinned ver)
+    docker-compose    # Compose V2 CLI plugin for `docker compose`
     rustup
     pkg-config
     wayland
