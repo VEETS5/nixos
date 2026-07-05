@@ -32,6 +32,7 @@
     kdePackages.kimageformats    # webp/avif/heif thumbnails in Dolphin/Gwenview
     kdePackages.qtsvg            # SVG rendering for KDE app icons/thumbnails
     haruna
+    chromium          # open-source Chromium browser (not Google Chrome)
     shared-mime-info
     gimp
     grim
