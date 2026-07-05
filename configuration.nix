@@ -217,6 +217,8 @@ in
     curl
     efibootmgr
     iw
+    ethtool      # NIC link/negotiation diagnostics (ethtool enp15s0)
+    pciutils     # lspci — identify NICs/GPUs and their kernel drivers
     neovim
     wl-clipboard
     brightnessctl
