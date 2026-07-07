@@ -213,6 +213,8 @@ in
   # ── System packages ─────────────────────────────────────────────────────────
   environment.systemPackages = with pkgs; [
     git
+    python3
+    gcc
     wget
     curl
     efibootmgr
