@@ -71,7 +71,7 @@
       Mod+Q      { close-window; }
       Mod+W      { spawn "firefox"; }
       Mod+E      { spawn "dolphin"; }
-      Mod+P      { spawn "foot" "spotify_player"; }
+      Mod+P      { spawn "spotify"; }
       Mod+S      { spawn "steam"; }
       Mod+V      { spawn "vesktop"; }
 
