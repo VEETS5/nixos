@@ -244,6 +244,7 @@ in
     glib
     protontricks
     davinci-resolve
+    librespot
   ];
   
   system.stateVersion = "25.11";
