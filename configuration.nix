@@ -244,7 +244,7 @@ in
     glib
     protontricks
     davinci-resolve
-    librespot
+    spotify
   ];
   
   system.stateVersion = "25.11";
