@@ -5,7 +5,7 @@ let
   isLaptop  = hostname == "nixpad";
   isDesktop = hostname == "nixtop";
   gpuType   = if isDesktop then "amd" else "intel";
-  wallpaper = ./wallpaper/default.png;
+  wallpaper = ./wallpaper/default.jpg;
 in
 {
   imports = [
