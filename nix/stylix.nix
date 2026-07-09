@@ -2,7 +2,7 @@
 {
   stylix = {
     enable = true;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest-dark-medium.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/ocean.yaml";
 
     image = wallpaper;
 

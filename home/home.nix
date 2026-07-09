@@ -153,5 +153,5 @@
   programs.home-manager.enable = true;
   
   # create wallpaper dir
-  home.file."Wallpaper/default.png".source = ../wallpaper/default.png;
+  home.file."Wallpaper/default.jpg".source = ../wallpaper/default.jpg;
 }
