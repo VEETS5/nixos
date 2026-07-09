@@ -144,7 +144,7 @@
     spawn-at-startup "systemctl" "--user" "start" "niri-session.service"
     spawn-at-startup "mako"
     spawn-at-startup "${pkgs.awww}/bin/awww-daemon"
-    spawn-at-startup "sh" "-c" "n=0; while ! ${pkgs.awww}/bin/awww query >/dev/null 2>&1 && [ $n -lt 50 ]; do n=$((n+1)); sleep 0.1; done; ${pkgs.awww}/bin/awww img /home/vito/Wallpaper/default.jpg"
+    spawn-at-startup "sh" "-c" "n=0; while ! ${pkgs.awww}/bin/awww query >/dev/null 2>&1 && [ $n -lt 50 ]; do n=$((n+1)); sleep 0.1; done; ${pkgs.awww}/bin/awww img ${osConfig.stylix.image}"
     spawn-at-startup "${vitobarPkg}/bin/vitobar"
     spawn-at-startup "copyq" "--start-server"
   '';

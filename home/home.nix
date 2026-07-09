@@ -151,7 +151,4 @@
   };
 
   programs.home-manager.enable = true;
-  
-  # create wallpaper dir
-  home.file."Wallpaper/default.jpg".source = ../wallpaper/default.jpg;
 }

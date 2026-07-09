@@ -22,6 +22,10 @@ nix flake update --flake ~/.config/nixos
 
 # Test build without switching
 nixos-rebuild build --flake ~/.config/nixos#nixtop
+
+# Change wallpaper (copies image, commits, rebuilds, pushes, live-swaps via awww,
+# restarts vitobar; stylix regenerates the whole colorscheme from the image)
+wp <image>          # alias for: bash ~/.config/nixos/set-wallpaper.sh
 ```
 
 ## Architecture
@@ -36,7 +40,9 @@ nixos-rebuild build --flake ~/.config/nixos#nixtop
 
 **nix/grub.nix** — GRUB with `efiInstallAsRemovable = true` and systemd-boot force-disabled. This is intentional — do not re-enable systemd-boot or set `canTouchEfiVariables = true`.
 
-**nix/stylix.nix** — Takes `wallpaper` as a function argument (not standard module args). Theme is everforest-dark-medium. GRUB styling is disabled in stylix (minegrub handles it).
+**nix/stylix.nix** — Takes `wallpaper` as a function argument (not standard module args). No pinned base16 scheme: stylix auto-generates a dark palette from the wallpaper image, so the theme always matches it. GRUB styling is disabled in stylix (minegrub handles it).
+
+**Wallpaper flow** — `configuration.nix` globs `wallpaper/` and uses whatever single image file is there (any name/format). `set-wallpaper.sh` (`wp` alias) replaces it, commits, rebuilds, pushes, live-swaps via awww, and restarts vitobar. niri's startup wallpaper command references the image by nix store path (`osConfig.stylix.image`), and vitobar reads colors at runtime from `~/.config/stylix/palette.json` — no hardcoded paths.
 
 **hosts/**/hardware-configuration.nix** — Machine-specific hardware configs (generated, rarely hand-edited).
 
