@@ -2,7 +2,10 @@
 {
   stylix = {
     enable = true;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/ocean.yaml";
+    # No base16Scheme pinned: stylix generates the palette from the wallpaper,
+    # so the colorscheme always matches the image. To pin a scheme instead:
+    #   base16Scheme = "${pkgs.base16-schemes}/share/themes/ocean.yaml";
+    polarity = "dark";
 
     image = wallpaper;
 

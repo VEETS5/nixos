@@ -5,7 +5,11 @@ let
   isLaptop  = hostname == "nixpad";
   isDesktop = hostname == "nixtop";
   gpuType   = if isDesktop then "amd" else "intel";
-  wallpaper = ./wallpaper/default.jpg;
+  # Whatever single image sits in wallpaper/ becomes the wallpaper — any
+  # filename, any format. Swap it with the `wp <image>` alias (set-wallpaper.sh).
+  wallpaper = ./wallpaper + "/${builtins.head
+    (builtins.filter (n: !(lib.hasPrefix "." n))
+      (builtins.attrNames (builtins.readDir ./wallpaper)))}";
 in
 {
   imports = [
