@@ -26,6 +26,7 @@
     kdePackages.kate             # text editor
     kdePackages.kcalc            # calculator
     kdePackages.kdialog          # native KDE dialogs for scripts/CLI
+    kdePackages.kde-cli-tools    # keditfiletype etc. for Dolphin's file-association UI
     kdePackages.filelight        # disk-usage visualiser
     kdePackages.spectacle        # screenshot tool
     kdePackages.kio-extras       # extra KIO protocols (mtp:/, sftp:/, etc.)
@@ -111,11 +112,11 @@
       Environment = [
         "HOME=/home/vito"
         "XDG_CONFIG_HOME=/home/vito/.config"
-        "PATH=${pkgs.kdePackages.dolphin}/bin:/run/current-system/sw/bin"
+        "PATH=${pkgs.kdePackages.dolphin}/bin:${pkgs.kdePackages.kde-cli-tools}/bin:/etc/profiles/per-user/vito/bin:/run/current-system/sw/bin"
         "QT_QPA_PLATFORM=wayland"
         "QT_QPA_PLATFORMTHEME=qt6ct"
         "QT_PLUGIN_PATH=${pkgs.kdePackages.qtstyleplugin-kvantum}/lib/qt-6/plugins:/run/current-system/sw/lib/qt-6/plugins"
-        "XDG_DATA_DIRS=${pkgs.kdePackages.dolphin}/share:${pkgs.kdePackages.kio-extras}/share:${pkgs.shared-mime-info}/share:/run/current-system/sw/share"
+        "XDG_DATA_DIRS=${pkgs.kdePackages.dolphin}/share:${pkgs.kdePackages.kio-extras}/share:${pkgs.shared-mime-info}/share:/etc/profiles/per-user/vito/share:/run/current-system/sw/share"
       ];
     };
   };
@@ -147,6 +148,19 @@
       "x-scheme-handler/discord" = "vesktop.desktop";
       "x-scheme-handler/claude-cli" = "claude-code-url-handler.desktop";
       "inode/directory" = "org.kde.dolphin.desktop";
+      "application/pdf" = "org.kde.okular.desktop";
+      "application/epub+zip" = "org.kde.okular.desktop";
+      "image/png" = "org.kde.gwenview.desktop";
+      "image/jpeg" = "org.kde.gwenview.desktop";
+      "image/gif" = "org.kde.gwenview.desktop";
+      "image/webp" = "org.kde.gwenview.desktop";
+      "image/svg+xml" = "org.kde.gwenview.desktop";
+      "image/avif" = "org.kde.gwenview.desktop";
+      "video/mp4" = "org.kde.haruna.desktop";
+      "video/x-matroska" = "org.kde.haruna.desktop";
+      "video/webm" = "org.kde.haruna.desktop";
+      "video/quicktime" = "org.kde.haruna.desktop";
+      "text/plain" = "org.kde.kate.desktop";
     };
   };
 

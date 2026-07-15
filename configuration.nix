@@ -80,6 +80,31 @@ in
   # want 6GHz kept only as a last-resort fallback.
   networking.wireless.iwd.settings.Rank.BandModifier6GHz = 0.0;
 
+  # Pin the ethernet NIC (RTL8126A) to gigabit-only autonegotiation. Gigabit link
+  # training on this cable is marginal — it takes two attempts and ~8s to settle.
+  # The Realtek PHY counts failed attempts and then "downshifts": it gives up and
+  # settles at 100Mb/s Full, where it stays until the next link event. Symptom is
+  # wired being SLOWER than wifi (100Mb caps you around 94 Mbit/s, well under what
+  # the WiFi 7 card does). The kernel says so outright:
+  #   "Downshift occurred from negotiated speed 1Gbps to actual speed 100Mbps"
+  # The PHY's downshift tunable is not exposed by this driver (ethtool
+  # --set-phy-tunable downshift → "Operation not supported"), so we can't disable
+  # it directly. Instead we remove its escape hatch: advertise ONLY 1000baseT/Full,
+  # so autonegotiation has no 100Mb mode left to fall back to.
+  #
+  # TRADEOFF: if the link ever genuinely can't train gigabit, you get NO link
+  # rather than a slow one — wifi is the fallback. The underlying cable/port is
+  # still marginal and worth replacing; this makes the failure loud instead of
+  # silently slow. Deliberately NOT advertising 2500/5000baseT (the NIC supports
+  # both): the switch is gigabit, and asking a marginal cable for more than 1G
+  # would only add training failures. Add them here if the switch is upgraded.
+  systemd.network.links = lib.mkIf isDesktop {
+    "10-enp15s0-gigabit" = {
+      matchConfig.MACAddress = "34:5a:60:d7:54:d3";
+      linkConfig.Advertise = "1000baset-full";
+    };
+  };
+
   # ── Locale ──────────────────────────────────────────────────────────────────
   time.timeZone = "America/Chicago";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -249,6 +274,7 @@ in
     protontricks
     davinci-resolve
     spotify
+    tailscale
   ];
   
   system.stateVersion = "25.11";
