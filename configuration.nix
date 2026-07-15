@@ -238,6 +238,9 @@ in
 
   # ── Laptop-only ─────────────────────────────────────────────────────────────
   services.upower.enable = isLaptop;
+  
+  # tailscale
+  services.tailscale.enable = true;
 
   # ── System packages ─────────────────────────────────────────────────────────
   environment.systemPackages = with pkgs; [
