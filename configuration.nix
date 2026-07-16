@@ -278,7 +278,7 @@ in
     davinci-resolve
     spotify
     tailscale
-    code
+    vscode
   ];
   
   system.stateVersion = "25.11";
