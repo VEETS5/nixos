@@ -148,6 +148,13 @@ in
     # and shows the GNOME-style picker regardless of the portal config above.
     GTK_USE_PORTAL     = "1";
     PKG_CONFIG_PATH    = "/run/current-system/sw/lib/pkgconfig:/run/current-system/sw/share/pkgconfig";
+    # Playwright drives the SYSTEM chromium (below) for GearCaddie's local scrape
+    # backend — never a Playwright-downloaded browser, and never Firefox (the
+    # daily browser stays untouched). Route A per gearcaddie DECISIONS 2026-07-18:
+    # nixpkgs chromium + executablePath avoids the npm-vs-driver version treadmill.
+    PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD           = "1";
+    PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS = "true";
+    PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH        = "${pkgs.chromium}/bin/chromium";
     XDG_DATA_DIRS       = lib.mkForce [
       "/run/current-system/sw/share"
       "/home/vito/.nix-profile/share"
@@ -279,6 +286,7 @@ in
     spotify
     tailscale
     vscode
+    chromium          # DEDICATED scraping browser (gearcaddie local backend) — not for browsing
   ];
   
   system.stateVersion = "25.11";
