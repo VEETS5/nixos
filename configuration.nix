@@ -287,6 +287,8 @@ in
     tailscale
     vscode
     chromium          # DEDICATED scraping browser (gearcaddie local backend) — not for browsing
+    codex
+    bubblewrap
   ];
   
   system.stateVersion = "25.11";
