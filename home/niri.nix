@@ -74,6 +74,7 @@
       Mod+P      { spawn "spotify"; }
       Mod+S      { spawn "steam"; }
       Mod+V      { spawn "vesktop"; }
+      Mod+C      { spawn "code"; }
 
       Mod+H { focus-column-left; }
       Mod+L { focus-column-right; }
