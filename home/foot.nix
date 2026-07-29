@@ -1,10 +1,23 @@
 { config, pkgs, lib, ... }:
 {
-  home.packages = [ pkgs.foot ];
+  home.packages = with pkgs; [
+    foot
+    # ── Terminal image viewers (sixel) ────────────────────────────────────────
+    # foot has no kitty/iTerm graphics protocol — sixel is the one it speaks.
+    chafa    # general-purpose; auto-picks sixel from TERM, `-f sixel` forces it
+    libsixel # img2sixel: straight PNG/JPG -> sixel, plus sixel2png the other way
+    timg     # images, animated GIFs and video frames, sixel-capable
+  ];
+
   xdg.configFile."foot/foot.ini".force = true;
   xdg.configFile."foot/foot.ini".text = ''
     [main]
-    term=xterm-256color
+    # Must be `foot`, NOT xterm-256color: image viewers decide whether to emit
+    # sixel by looking up TERM, and the xterm-256color entry advertises no sixel
+    # support, so chafa/timg/spotify-player silently fall back to ANSI blocks.
+    # The `foot` entry ships in ncurses itself, so it also resolves under sudo.
+    # Remote hosts often lack it — see the ssh wrapper in shell.nix.
+    term=foot
     font=JetBrainsMono Nerd Font:size=11
     dpi-aware=no
 
@@ -35,5 +48,10 @@
     bright5=${config.lib.stylix.colors.base0E}
     bright6=${config.lib.stylix.colors.base0C}
     bright7=${config.lib.stylix.colors.base07}
+
+    [tweak]
+    # Already the default in foot 1.27 — pinned explicitly so a future upstream
+    # default flip can't silently kill image output.
+    sixel=yes
   '';
 }
