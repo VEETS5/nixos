@@ -261,6 +261,7 @@ in
     ethtool      # NIC link/negotiation diagnostics (ethtool enp15s0)
     pciutils     # lspci — identify NICs/GPUs and their kernel drivers
     neovim
+    cmatrix
     wl-clipboard
     brightnessctl
     nodejs
