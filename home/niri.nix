@@ -148,5 +148,8 @@
     spawn-at-startup "sh" "-c" "n=0; while ! ${pkgs.awww}/bin/awww query >/dev/null 2>&1 && [ $n -lt 50 ]; do n=$((n+1)); sleep 0.1; done; ${pkgs.awww}/bin/awww img ${osConfig.stylix.image}"
     spawn-at-startup "${vitobarPkg}/bin/vitobar"
     spawn-at-startup "copyq" "--start-server"
+    // Runs headless if no tray host is present — it is still the bluez pairing
+    // agent (PIN/confirm dialogs) and drives auto-reconnect for known devices.
+    spawn-at-startup "${pkgs.blueman}/bin/blueman-applet"
   '';
 }
