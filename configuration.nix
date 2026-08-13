@@ -217,6 +217,25 @@ in
     pulse.enable = true;
   };
 
+  # ── Bluetooth ───────────────────────────────────────────────────────────────
+  # The adapter was always present (hci0, unblocked in rfkill) but bluez was
+  # never enabled, so nothing could see it. blueman is the GUI: DE-independent,
+  # which matters here because niri is a bare compositor — bluedevil would need
+  # plasmashell for its applet and systemsettings for its KCM, neither of which
+  # we run. A2DP/HFP codecs (SBC-XQ, AAC, aptX, LDAC) come from the pipewire
+  # build in nixpkgs already, so no extra codec packages are needed.
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    # Experimental exposes bluez's BatteryProvider1 D-Bus interface, which is
+    # what makes headset/controller battery percentages show up in blueman.
+    # It gates D-Bus interfaces, not driver behaviour — safe to leave on.
+    settings.General.Experimental = true;
+  };
+  # Provides blueman-manager + the blueman-mechanism system service and its
+  # polkit rules, so pairing/trusting works without sudo.
+  services.blueman.enable = true;
+
   # ── Fonts ───────────────────────────────────────────────────────────────────
   fonts = {
     enableDefaultPackages = true;
