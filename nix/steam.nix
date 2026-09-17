@@ -10,6 +10,8 @@ let
   });
 in
 {
+  environment.systemPackages = [ pkgs.heroic ];
+
   # Fix Steam menus closing immediately on Niri with xwayland-satellite 0.8.2.
   # Remove once nixpkgs includes https://github.com/Supreeeme/xwayland-satellite/pull/494.
   nixpkgs.overlays = [
