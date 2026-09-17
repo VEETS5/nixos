@@ -4,6 +4,7 @@
     enable = true;
     vesktop = {
       enable = true;
+      useSystemVencord = true;
       # WebRTC must not bind voice sockets to the tailscale0 address, or Discord
       # voice hangs at "DTLS connecting" (handshake over an unroutable 100.x src).
       # The --force-webrtc-ip-handling-policy CLI switch no longer exists in

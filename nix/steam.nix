@@ -10,6 +10,21 @@ let
   });
 in
 {
+  # Fix Steam menus closing immediately on Niri with xwayland-satellite 0.8.2.
+  # Remove once nixpkgs includes https://github.com/Supreeeme/xwayland-satellite/pull/494.
+  nixpkgs.overlays = [
+    (final: prev: {
+      xwayland-satellite = prev.xwayland-satellite.overrideAttrs (old: {
+        patches = (old.patches or [ ]) ++ [
+          (prev.fetchurl {
+            url = "https://github.com/Supreeeme/xwayland-satellite/commit/add2795134593faafce60e404a0a75df68e9ee0c.patch";
+            hash = "sha256-XD93f8m8h0o0Vs3QcmWkHGGi5mZwf9wkx9qEiq6sjnw=";
+          })
+        ];
+      });
+    })
+  ];
+
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;
