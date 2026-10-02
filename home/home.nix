@@ -1,10 +1,10 @@
-{ config, pkgs, vitobar, ... }:
+{ config, pkgs, ... }:
 {
   imports = [
     ./shell.nix
     ./foot.nix
     ./niri.nix
-    ./mako.nix
+    ./noctalia.nix
     ./nvim.nix
     ./nixcord.nix
     ./macchina.nix
@@ -17,7 +17,6 @@
   home.stateVersion  = "25.11";
   
   home.packages = with pkgs; [
-    swww
     # ── KDE application suite (apps only — no Plasma desktop) ──────────────────
     kdePackages.dolphin          # file manager
     kdePackages.ark              # archive manager
@@ -44,7 +43,6 @@
     gh
     vim
     claude-code
-    vitobar.packages.x86_64-linux.default
     easyeffects
     lsp-plugins
     playerctl
@@ -83,23 +81,6 @@
     };
   };
 
-  # Helper service that activates graphical-session.target when niri starts.
-  # Needed because greetd launches niri directly (not via niri.service),
-  # so graphical-session.target never gets pulled in on its own.
-  systemd.user.services.niri-session = {
-    Unit = {
-      Description = "Niri graphical session";
-      BindsTo = [ "graphical-session.target" ];
-      Before = [ "graphical-session.target" ];
-      Wants = [ "graphical-session-pre.target" ];
-      After = [ "graphical-session-pre.target" ];
-    };
-    Service = {
-      Type = "simple";
-      ExecStart = "${pkgs.coreutils}/bin/sleep infinity";
-    };
-  };
-
   systemd.user.services.plasma-dolphin = {
     Unit = {
       Description = "Dolphin file manager";
@@ -134,6 +115,14 @@
 
   xdg.mimeApps = {
     enable = true;
+    # Cover supported formats using the installed apps' own desktop entries.
+    defaultApplicationPackages = with pkgs; [
+      kdePackages.ark
+      kdePackages.gwenview
+      haruna
+      kdePackages.kate
+      kdePackages.okular
+    ];
     defaultApplications = {
       "x-scheme-handler/http" = "firefox.desktop";
       "x-scheme-handler/https" = "firefox.desktop";
@@ -148,8 +137,8 @@
       "x-scheme-handler/discord" = "vesktop.desktop";
       "x-scheme-handler/claude-cli" = "claude-code-url-handler.desktop";
       "inode/directory" = "org.kde.dolphin.desktop";
-      "application/pdf" = "org.kde.okular.desktop";
-      "application/epub+zip" = "org.kde.okular.desktop";
+      "application/pdf" = "okularApplication_pdf.desktop";
+      "application/epub+zip" = "okularApplication_epub.desktop";
       "image/png" = "org.kde.gwenview.desktop";
       "image/jpeg" = "org.kde.gwenview.desktop";
       "image/gif" = "org.kde.gwenview.desktop";

@@ -7,7 +7,6 @@
       cls  = "clear";
       snvim = "sudo -E nvim";
       ni = "cd ~/.config/nixos/";
-      vbu = "bash ~/.config/nixos/update-vitobar.sh";
       wp  = "bash ~/.config/nixos/set-wallpaper.sh";
       ncp = "cd ~/.config/nixos && git add -A && git commit && git push && cd -";
       claude-latest = "$HOME/.local/bin/claude";

@@ -19,10 +19,6 @@
       url = "github:Lxtharia/minegrub-theme";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    vitobar = {
-      url = "github:VEETS5/vitobar";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nixcord = {
       url = "github:FlameFlag/nixcord";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,13 +26,13 @@
     proton-cachyos.url = "github:powerofthe69/proton-cachyos-nix";
   };
 
-  outputs = { self, nixpkgs, home-manager, stylix, nixvim, vitobar, nixcord, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, stylix, nixvim, nixcord, ... }@inputs:
   {
     nixosConfigurations = {
 
       nixpad = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-	      specialArgs = { inherit inputs vitobar; };
+	      specialArgs = { inherit inputs; };
         modules = [
           ./hosts/nixpad/hardware-configuration.nix
           ./configuration.nix
@@ -47,7 +43,6 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "hm-bak";
-            home-manager.extraSpecialArgs = { inherit vitobar; };
             home-manager.users.vito = import ./home/home.nix;
             home-manager.sharedModules = [ 
               nixvim.homeModules.nixvim
@@ -59,7 +54,7 @@
 
       nixtop = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-	      specialArgs = { inherit inputs vitobar; };
+	      specialArgs = { inherit inputs; };
         modules = [
           ./hosts/nixtop/hardware-configuration.nix
           ./configuration.nix
@@ -70,7 +65,6 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "hm-bak";
-            home-manager.extraSpecialArgs = { inherit vitobar; };
             home-manager.users.vito = import ./home/home.nix;
             home-manager.sharedModules = [ 
               nixvim.homeModules.nixvim

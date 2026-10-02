@@ -1,6 +1,6 @@
-{ config, pkgs, vitobar, osConfig, ... }:
+{ config, pkgs, osConfig, ... }:
   let
-    vitobarPkg = vitobar.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    noctalia = "${config.programs.noctalia.package}/bin/noctalia";
     hostname = osConfig.networking.hostName;
     isDesktop = hostname == "nixtop";
   in
@@ -67,7 +67,7 @@
 
     binds {
       Mod+Return { spawn "foot"; }
-      Mod+Space  { spawn "${vitobarPkg}/bin/vitolauncher"; }
+      Mod+Space  { spawn "${noctalia}" "msg" "panel-toggle" "launcher"; }
       Mod+Q      { close-window; }
       Mod+W      { spawn "firefox"; }
       Mod+E      { spawn "dolphin"; }
@@ -126,9 +126,16 @@
       Mod+WheelScrollDown cooldown-ms=150 { focus-column-right; }
       Mod+WheelScrollUp   cooldown-ms=150 { focus-column-left; }
 
-      Mod+Backslash { spawn "sh" "-c" "pkill -x vitobar || ${vitobarPkg}/bin/vitobar &"; }
+      Mod+Backslash { spawn "${noctalia}" "msg" "bar-toggle"; }
+      Mod+Comma { spawn "${noctalia}" "msg" "settings-toggle"; }
+      Mod+Shift+Comma { spawn "${noctalia}" "msg" "panel-toggle" "control-center"; }
 
       Mod+Shift+E { quit; }
+    }
+
+    window-rule {
+      match app-id="dev.noctalia.Noctalia"
+      open-floating true
     }
 
     window-rule {
@@ -142,11 +149,6 @@
       open-fullscreen true
     }
 
-    spawn-at-startup "systemctl" "--user" "start" "niri-session.service"
-    spawn-at-startup "mako"
-    spawn-at-startup "${pkgs.awww}/bin/awww-daemon"
-    spawn-at-startup "sh" "-c" "n=0; while ! ${pkgs.awww}/bin/awww query >/dev/null 2>&1 && [ $n -lt 50 ]; do n=$((n+1)); sleep 0.1; done; ${pkgs.awww}/bin/awww img ${osConfig.stylix.image}"
-    spawn-at-startup "${vitobarPkg}/bin/vitobar"
     spawn-at-startup "copyq" "--start-server"
     // Runs headless if no tray host is present — it is still the bluez pairing
     // agent (PIN/confirm dialogs) and drives auto-reconnect for known devices.
