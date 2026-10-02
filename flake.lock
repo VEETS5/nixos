@@ -407,29 +407,7 @@
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
         "proton-cachyos": "proton-cachyos",
-        "stylix": "stylix",
-        "vitobar": "vitobar"
-      }
-    },
-    "rust-overlay": {
-      "inputs": {
-        "nixpkgs": [
-          "vitobar",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1774926780,
-        "narHash": "sha256-JMdDYn0F+swYBILlpCeHDbCSyzqkeSGNxZ/Q5J584jM=",
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "rev": "962a0934d0e32f42d1b5e49186f9595f9b178d2d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "type": "github"
+        "stylix": "stylix"
       }
     },
     "stylix": {
@@ -580,27 +558,6 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "type": "github"
-      }
-    },
-    "vitobar": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "rust-overlay": "rust-overlay"
-      },
-      "locked": {
-        "lastModified": 1789606686,
-        "narHash": "sha256-Hj3dNhzfAbhrbs/IrGswwGW/otdnU/Kk/JI9229pIbs=",
-        "owner": "VEETS5",
-        "repo": "vitobar",
-        "rev": "f86bbf5ce85e73713b684e7a0620f1d6922113c7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "VEETS5",
-        "repo": "vitobar",
         "type": "github"
       }
     }

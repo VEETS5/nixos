@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Set the system wallpaper. Stylix regenerates the colorscheme from the image,
-# so everything (foot, niri, GTK, nvim, mako, greeter, vitobar) follows.
+# so everything (foot, niri, GTK, nvim, greeter, Noctalia) follows.
 #
 # Usage: wp <image>        (alias for: bash ~/.config/nixos/set-wallpaper.sh)
 set -euo pipefail
@@ -34,13 +34,7 @@ sudo nixos-rebuild switch --flake "$NIXOS_DIR#$HOST"
 echo "==> Pushing..."
 git push || echo "    (push failed — commit is local, push manually later)"
 
-echo "==> Swapping wallpaper live..."
-awww img "$dest" || true
-
-echo "==> Restarting vitobar with new palette..."
-pkill -x vitobar || true
-sleep 0.5
-nohup vitobar >/dev/null 2>&1 &
-disown
+# Home Manager restarts Noctalia when its Stylix palette or wallpaper changes.
+systemctl --user restart noctalia.service
 
 echo "==> Done! New windows use the new colors; log out/in (Mod+Shift+E) to restyle everything."

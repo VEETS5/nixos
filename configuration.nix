@@ -263,6 +263,9 @@ in
 
   # ── Dolphin dependencies ─────────────────────────────────────────────────────
   services.udisks2.enable = true;
+  # KDE's application discovery also needs a menu when running under Niri.
+  environment.etc."xdg/menus/applications.menu".source =
+    "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
 
   # ── Containers / local dev services ─────────────────────────────────────────
   # Docker Engine for project docker-compose stacks (e.g. golfpicker's Postgres +
@@ -271,8 +274,10 @@ in
   # cli-plugin into the profile so `docker compose ...` resolves.
   virtualisation.docker.enable = true;
 
-  # ── Laptop-only ─────────────────────────────────────────────────────────────
-  services.upower.enable = isLaptop;
+  # Noctalia battery/peripheral status and power-profile controls.
+  services.upower.enable = true;
+  services.power-profiles-daemon.enable = true;
+  xdg.sounds.enable = true;
   
   # tailscale
   services.tailscale.enable = true;
