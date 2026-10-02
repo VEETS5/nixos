@@ -23,6 +23,7 @@ nix flake update --flake ~/.config/nixos
 # Test build without switching
 nixos-rebuild build --flake ~/.config/nixos#nixtop
 bash ~/.config/nixos/tests/check-login.sh ./result
+bash ~/.config/nixos/tests/check-wallpaper.sh
 
 # Change wallpaper (copies image, commits, rebuilds, pushes, restarts Noctalia; stylix regenerates the whole colorscheme from the image)
 wp <image>          # alias for: bash ~/.config/nixos/set-wallpaper.sh
@@ -42,7 +43,7 @@ wp <image>          # alias for: bash ~/.config/nixos/set-wallpaper.sh
 
 **nix/stylix.nix** — Takes `wallpaper` as a function argument (not standard module args). No pinned base16 scheme: stylix auto-generates a dark palette from the wallpaper image, so the theme always matches it. GRUB styling is disabled in stylix (minegrub handles it).
 
-**Wallpaper flow** — `configuration.nix` selects the image in `wallpaper/`. `set-wallpaper.sh` (`wp` alias) replaces it, commits, rebuilds, pushes, and restarts Noctalia. Stylix supplies the shell palette, font, wallpaper, application themes, and Niri focus colors. Noctalia app-theme templates are disabled to avoid competing with Stylix. GUI settings can override Noctalia defaults; keep shared theme changes in Nix.
+**Wallpaper flow** — `configuration.nix` selects the image in `wallpaper/`. `set-wallpaper.sh` (`wp` alias) replaces it, commits, rebuilds, pushes, and restarts Noctalia. Stylix supplies the shell palette, font, wallpaper, application themes, and Niri focus colors. Noctalia app-theme templates are disabled to avoid competing with Stylix. Noctalia’s wallpaper-change hook opens a terminal to run the same `wp` rebuild with sudo. It compares the selected image with the applied Stylix image to avoid restart loops. A separate systemd user unit survives shell restarts and allows one rebuild at a time; if another wallpaper is selected while busy, reselect it after the rebuild finishes. The selected image drives one global Stylix palette, even with per-monitor wallpapers. Other GUI theme overrides can still override Noctalia defaults.
 
 **Desktop shell** — `home/noctalia.nix` uses the pinned nixpkgs package and Home Manager service. `nix/greeter.nix` enables Noctalia Greeter with matching Stylix colors. Niri session entries are linked into the system profile with `environment.pathsToLink`: greetd login replaces service-level `XDG_DATA_DIRS`, so relying on that variable hides Niri and produces a Shell-only login. The greeter launches the packaged Niri session, which manages the graphical-session target. Mod+Space opens the launcher, Mod+Comma settings, Mod+Shift+Comma control center, and Mod+Backslash toggles the bar.
 
