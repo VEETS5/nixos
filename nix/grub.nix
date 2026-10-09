@@ -12,8 +12,8 @@
     configurationLimit = 10;
     extraInstallCommands = ''
       # Keep the existing firmware entry synchronized with removable GRUB.
-      mkdir -p /boot/EFI/NixOS-boot
-      cp /boot/EFI/BOOT/BOOTX64.EFI /boot/EFI/NixOS-boot/grubx64.efi
+      ${pkgs.coreutils}/bin/mkdir -p /boot/EFI/NixOS-boot
+      ${pkgs.coreutils}/bin/cp /boot/EFI/BOOT/BOOTX64.EFI /boot/EFI/NixOS-boot/grubx64.efi
     '';
     minegrub-theme = {
       enable = true;
