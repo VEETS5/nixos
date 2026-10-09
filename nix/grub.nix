@@ -9,9 +9,11 @@
     efiSupport = true;
     efiInstallAsRemovable = true;
     useOSProber = true;
+    configurationLimit = 10;
     extraInstallCommands = ''
-      # Clean up leftover systemd-boot files from the installer
-      rm -rf /boot/EFI/systemd /boot/EFI/Linux /boot/loader/entries /boot/loader/loader.conf 2>/dev/null || true
+      # Keep the existing firmware entry synchronized with removable GRUB.
+      mkdir -p /boot/EFI/NixOS-boot
+      cp /boot/EFI/BOOT/BOOTX64.EFI /boot/EFI/NixOS-boot/grubx64.efi
     '';
     minegrub-theme = {
       enable = true;
