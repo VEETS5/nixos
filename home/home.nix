@@ -33,6 +33,7 @@
     kdePackages.qtsvg            # SVG rendering for KDE app icons/thumbnails
     haruna
     chromium          # open-source Chromium browser (not Google Chrome)
+    qbittorrent       # BitTorrent client
     shared-mime-info
     gimp
     grim
