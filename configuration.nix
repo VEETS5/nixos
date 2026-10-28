@@ -89,6 +89,10 @@ in
   # want 6GHz kept only as a last-resort fallback.
   networking.wireless.iwd.settings.Rank.BandModifier6GHz = 0.0;
 
+  # NBA 2K14 stalls on its dead online servers (3-8 fps stutter under Proton).
+  # Blackholing them locally makes the requests fail fast → smooth 60 fps.
+  networking.hosts."127.0.0.1" = [ "nba2k14.pc.2ksports.com" "ns.take2games.com" ];
+
   # Pin the ethernet NIC (RTL8126A) to gigabit-only autonegotiation. Gigabit link
   # training on this cable is marginal — it takes two attempts and ~8s to settle.
   # The Realtek PHY counts failed attempts and then "downshifts": it gives up and
