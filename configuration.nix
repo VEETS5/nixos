@@ -327,6 +327,7 @@ in
     chromium          # DEDICATED scraping browser (gearcaddie local backend) — not for browsing
     codex
     bubblewrap
+    pince
   ];
   
   system.stateVersion = "25.11";
