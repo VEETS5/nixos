@@ -328,6 +328,7 @@ in
     codex
     bubblewrap
     pince
+    herdr             # terminal workspace manager for AI coding agents
   ];
   
   system.stateVersion = "25.11";
