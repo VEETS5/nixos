@@ -10,6 +10,7 @@
       wp  = "bash ~/.config/nixos/set-wallpaper.sh";
       ncp = "cd ~/.config/nixos && git add -A && git commit && git push && cd -";
       claude-latest = "$HOME/.local/bin/claude";
+      bedrock-on-linux = "QT_STYLE_OVERRIDE=Fusion command bedrock-on-linux";
       # Show an image inline in foot via sixel. `-f sixel` is redundant now that
       # TERM=foot auto-detects, but keeps this working over ssh/tmux/TERM
       # overrides where detection gives up.

@@ -10,15 +10,6 @@ let
   wallpaper = ./wallpaper + "/${builtins.head
     (builtins.filter (n: !(lib.hasPrefix "." n))
       (builtins.attrNames (builtins.readDir ./wallpaper)))}";
-  # Blackmagic silently replaced the 21.1 archive without changing its version.
-  davinciResolve = pkgs.davinci-resolve.override {
-    runCommandLocal = name: attrs: script:
-      pkgs.runCommandLocal name
-        (attrs // lib.optionalAttrs (name == "davinci-resolve-src.zip") {
-          outputHash = "sha256-+3SB32EHpH9/0hM3h8CrO6f7V4ZAmxUFh3P8m6QDeO0=";
-        })
-        script;
-  };
 in
 {
   imports = [
@@ -320,7 +311,7 @@ in
     unzip
     glib
     protontricks
-    davinciResolve
+    davinci-resolve
     spotify
     tailscale
     vscode

@@ -66,6 +66,33 @@
     '')
   ];
 
+  xdg.desktopEntries.bedrock-on-linux = {
+    name = "BedrockOnLinux";
+    genericName = "Minecraft Bedrock Launcher";
+    comment = "Run Minecraft Bedrock (Windows GDK) on Linux, multiplayer included";
+    exec = "env QT_STYLE_OVERRIDE=Fusion bedrock-on-linux gui";
+    icon = "bedrock-on-linux";
+    terminal = false;
+    categories = [ "Game" "ActionGame" ];
+    settings = {
+      Keywords = "minecraft;bedrock;gdk;wine;proton;mcbe;";
+      StartupNotify = "true";
+      StartupWMClass = "BedrockOnLinux";
+    };
+    actions = {
+      Play = {
+        name = "Play without the launcher";
+        exec = "env QT_STYLE_OVERRIDE=Fusion bedrock-on-linux play";
+      };
+      Editor = {
+        name = "Open Bedrock Editor";
+        exec = "env QT_STYLE_OVERRIDE=Fusion bedrock-on-linux play --editor";
+      };
+    };
+  };
+  home.file.".local/share/applications/bedrock-on-linux.desktop".source =
+    "${config.home.path}/share/applications/bedrock-on-linux.desktop";
+
   services.easyeffects.enable = true;
   services.playerctld.enable = true;
 
