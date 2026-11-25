@@ -36,6 +36,12 @@
       modules = [
         ./hosts/${name}
         ./configuration.nix
+        {
+          environment.systemPackages = [ self.packages.x86_64-linux.nixman ];
+          # Lets nixman (and `nixos-version --configuration-revision`) show which
+          # commit each generation was built from.
+          system.configurationRevision = self.rev or self.dirtyRev or null;
+        }
         stylix.nixosModules.stylix
         home-manager.nixosModules.home-manager
         {
@@ -53,5 +59,8 @@
   in
   {
     nixosConfigurations = nixpkgs.lib.genAttrs [ "nixpad" "nixtop" ] mkHost;
+
+    packages.x86_64-linux.nixman =
+      nixpkgs.legacyPackages.x86_64-linux.callPackage ./nixman/package.nix { };
   };
 }

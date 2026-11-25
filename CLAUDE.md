@@ -57,3 +57,12 @@ wp <image>          # alias for: bash ~/.config/nixos/set-wallpaper.sh
 
 - Stylix is imported as a function call `(import ./nix/stylix.nix { inherit pkgs wallpaper; })` rather than a standard module import, because it needs the wallpaper path.
 - Home-manager is configured inline in flake.nix with `useGlobalPkgs = true` and `useUserPackages = true`.
+
+## nixman
+
+`nixman/` is a Rust (ratatui) TUI for this repo, installed on every host via `packages.x86_64-linux.nixman` in flake.nix. Run `nixman` (or `nixman ls|add|rm`, see `--help`).
+
+- **Packages** tab edits the four lists that apply to a host: `configuration.nix` (system, all), `home/home.nix` (home, all), and the two lists in `hosts/<host>/default.nix`. Entries must stay one attribute per line; anything else in a list is preserved as "unmanaged". Search uses a cached `nix search` index per locked nixpkgs rev in `~/.cache/nixman/`.
+- **System** tab only ever builds/activates the *current* hostname's config, and checks the built store path name matches before switching (guards against the wrong-host boot loop). Switch = build → nvd diff → confirm → `sudo nixos-rebuild switch --store-path`.
+- `system.configurationRevision` is set from the flake rev, so generations record their commit and nixman can show whether this machine is behind HEAD.
+- Dev: `cd nixman && nix shell nixpkgs#cargo nixpkgs#rustc nixpkgs#gcc -c cargo test` (rustup's cargo shim has no toolchain installed).
