@@ -27,54 +27,31 @@
   };
 
   outputs = { self, nixpkgs, home-manager, stylix, nixvim, nixcord, ... }@inputs:
-  {
-    nixosConfigurations = {
-
-      nixpad = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-	      specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/nixpad/hardware-configuration.nix
-          ./configuration.nix
-	        stylix.nixosModules.stylix
-	        { networking.hostName = "nixpad"; }
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "hm-bak";
-            home-manager.users.vito = import ./home/home.nix;
-            home-manager.sharedModules = [ 
-              nixvim.homeModules.nixvim
-              nixcord.homeModules.nixcord
-            ];
-          }
-        ];
-      };
-
-      nixtop = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-	      specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/nixtop/hardware-configuration.nix
-          ./configuration.nix
-	        stylix.nixosModules.stylix
-          { networking.hostName = "nixtop"; }
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "hm-bak";
-            home-manager.users.vito = import ./home/home.nix;
-            home-manager.sharedModules = [ 
-              nixvim.homeModules.nixvim
-              nixcord.homeModules.nixcord  
-            ];
-
-          }
-        ];
-      };
-
+  let
+    # Every directory in hosts/ is one machine; hosts/<name>/default.nix holds
+    # its hostname, hardware config and machine-only packages.
+    mkHost = name: nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { inherit inputs; };
+      modules = [
+        ./hosts/${name}
+        ./configuration.nix
+        stylix.nixosModules.stylix
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.backupFileExtension = "hm-bak";
+          home-manager.users.vito = import ./home/home.nix;
+          home-manager.sharedModules = [
+            nixvim.homeModules.nixvim
+            nixcord.homeModules.nixcord
+          ];
+        }
+      ];
     };
+  in
+  {
+    nixosConfigurations = nixpkgs.lib.genAttrs [ "nixpad" "nixtop" ] mkHost;
   };
 }

@@ -31,7 +31,7 @@ wp <image>          # alias for: bash ~/.config/nixos/set-wallpaper.sh
 
 ## Architecture
 
-**flake.nix** — Entry point. Defines both host configurations with shared modules. Key inputs: nixpkgs (unstable), home-manager, stylix, nixvim, minegrub-theme, nixcord.
+**flake.nix** — Entry point. `mkHost` builds each host from `hosts/<name>/` plus the shared modules. Key inputs: nixpkgs (unstable), home-manager, stylix, nixvim, minegrub-theme, nixcord.
 
 **configuration.nix** — Shared system config for both hosts. Uses `let` bindings to branch on hostname for GPU drivers, laptop-only services, and session variables. Imports three sub-modules from `nix/`.
 
@@ -48,6 +48,8 @@ wp <image>          # alias for: bash ~/.config/nixos/set-wallpaper.sh
 **Desktop shell** — `home/noctalia.nix` uses the pinned nixpkgs package and Home Manager service. `nix/greeter.nix` enables Noctalia Greeter with matching Stylix colors. Niri session entries are linked into the system profile with `environment.pathsToLink`: greetd login replaces service-level `XDG_DATA_DIRS`, so relying on that variable hides Niri and produces a Shell-only login. The greeter launches the packaged Niri session, which manages the graphical-session target. Mod+Space opens the launcher, Mod+Comma settings, Mod+Shift+Comma control center, and Mod+Backslash toggles the bar.
 
 **Vitobar** — The independent repository at `~/.config/vitobar` is preserved for development. It is no longer a flake input, installed package, greeter, or startup command here.
+
+**hosts/<name>/default.nix** — Machine-specific module: hostname, hardware import, and machine-only system + home-manager package lists (managed by nixman, one attribute per line).
 
 **hosts/**/hardware-configuration.nix** — Machine-specific hardware configs (generated, rarely hand-edited).
 
