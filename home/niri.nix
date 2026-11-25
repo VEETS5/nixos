@@ -166,6 +166,14 @@
     // for the current layout mode.
     include optional=true "${config.xdg.stateHome}/niri-tile/animations.kdl"
 
+    // OLED pixel refresh (home/oled-refresh.nix): always fullscreen and
+    // focused. After the include so tile mode's open-focused false loses.
+    window-rule {
+      match app-id=r#"^com\.vito\.oled-refresh$"#
+      open-fullscreen true
+      open-focused true
+    }
+
     spawn-at-startup "copyq" "--start-server"
     // Runs headless if no tray host is present — it is still the bluez pairing
     // agent (PIN/confirm dialogs) and drives auto-reconnect for known devices.

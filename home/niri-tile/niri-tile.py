@@ -26,8 +26,10 @@ STATE_DIR = os.path.join(os.environ.get("XDG_RUNTIME_DIR", "/tmp"), "niri-tile")
 MODE_FILE = os.path.join(STATE_DIR, "mode")
 # niri `include`s this file; set by the Nix module.
 ANIM_FILE = os.environ.get("NIRI_TILE_ANIMATIONS")
-# Workspaces holding one of these are left alone (fullscreen games).
-SKIP_APPS = ("steam_app_", "gamescope", ".gamescope-wrapped")
+# Workspaces holding one of these are left alone (fullscreen games, the
+# hourly OLED pixel refresh): resizing a fullscreen window un-fullscreens it.
+SKIP_APPS = ("steam_app_", "gamescope", ".gamescope-wrapped",
+             "com.vito.oled-refresh")
 # Events that can change which windows exist or where they sit. Arranging is
 # idempotent, so the layout events our own resizes cause settle immediately.
 EVENTS = ("WindowOpenedOrChanged", "WindowClosed", "WindowsChanged",
