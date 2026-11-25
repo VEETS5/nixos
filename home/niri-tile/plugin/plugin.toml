@@ -1,0 +1,12 @@
+id          = "local/tilemode"
+name        = "Tile mode"
+version     = "1.0.0"
+plugin_api  = 24
+author      = "local"
+license     = "GPL-3.0-only"
+icon        = "layout-grid"
+description = "Shows and toggles the niri-tile layout mode."
+
+[[widget]]
+id    = "tilemode"
+entry = "tilemode.luau"

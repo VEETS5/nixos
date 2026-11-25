@@ -105,6 +105,10 @@
       Mod+Shift+4 { move-window-to-workspace 4; }
       Mod+Shift+5 { move-window-to-workspace 5; }
 
+      // Layout mode (niri-tile, see home/niri-tile): T = tiling, A = scrolling.
+      Mod+T       { spawn "niri-tile" "set" "tile"; }
+      Mod+A       { spawn "niri-tile" "set" "scroll"; }
+
       Mod+R       { switch-preset-column-width; }
       Mod+F       { maximize-column; }
       Mod+Shift+F { fullscreen-window; }
@@ -138,6 +142,15 @@
       open-floating true
     }
 
+    // Steam's toasts ("friend is now playing ...") are separate windows; without
+    // this they tile into the middle of the screen and grab focus.
+    window-rule {
+      match app-id="steam" title=r#"^notificationtoasts"#
+      open-floating true
+      open-focused false
+      default-floating-position x=16 y=16 relative-to="bottom-right"
+    }
+
     window-rule {
       match app-id=r#"^steam_app_"#
       open-fullscreen true
@@ -148,6 +161,10 @@
       match app-id=r#"^\.gamescope-wrapped$"#
       open-fullscreen true
     }
+
+    // Written by the niri-tile daemon (home/niri-tile): animation overrides
+    // for the current layout mode.
+    include optional=true "${config.xdg.stateHome}/niri-tile/animations.kdl"
 
     spawn-at-startup "copyq" "--start-server"
     // Runs headless if no tray host is present — it is still the bluez pairing

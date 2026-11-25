@@ -4,6 +4,7 @@
     ./shell.nix
     ./foot.nix
     ./niri.nix
+    ./niri-tile
     ./noctalia.nix
     ./nvim.nix
     ./nixcord.nix

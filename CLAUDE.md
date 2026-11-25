@@ -39,6 +39,8 @@ wp <image>          # alias for: bash ~/.config/nixos/set-wallpaper.sh
 
 **home/niri.nix** — Generates `niri/config.kdl` via `xdg.configFile`. Uses Nix string interpolation with `isDesktop` conditionals for monitor layout and keybind differences (monitor focus vs window focus on J/K).
 
+**home/niri-tile/** — `niri-tile` user daemon that fakes a non-scrolling layout on niri over IPC (master left, rest stacked right; Mod+T tile / Mod+A scroll; mode in `$XDG_RUNTIME_DIR/niri-tile/mode`, default set by `defaultMode`), plus a local Noctalia plugin `local/tilemode` showing the mode at the far left of the bar.
+
 **nix/grub.nix** — GRUB with `efiInstallAsRemovable = true` and systemd-boot force-disabled. This is intentional — do not re-enable systemd-boot or set `canTouchEfiVariables = true`.
 
 **nix/stylix.nix** — Takes `wallpaper` as a function argument (not standard module args). No pinned base16 scheme: stylix auto-generates a dark palette from the wallpaper image, so the theme always matches it. GRUB styling is disabled in stylix (minegrub handles it).
