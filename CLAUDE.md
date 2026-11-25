@@ -39,7 +39,7 @@ wp <image>          # alias for: bash ~/.config/nixos/set-wallpaper.sh
 
 **home/niri.nix** — Generates `niri/config.kdl` via `xdg.configFile`. Uses Nix string interpolation with `isDesktop` conditionals for monitor layout and keybind differences (monitor focus vs window focus on J/K).
 
-**home/niri-tile/** — `niri-tile` user daemon that fakes a non-scrolling layout on niri over IPC (master left, rest stacked right; Mod+T tile / Mod+A scroll; mode in `$XDG_RUNTIME_DIR/niri-tile/mode`, default set by `defaultMode`), plus a local Noctalia plugin `local/tilemode` showing the mode at the far left of the bar.
+**home/niri-tile/** — `niri-tile` user daemon that fakes a non-scrolling layout on niri over IPC (master left, rest stacked right; Mod+T tile / Mod+A scroll; mode in `$XDG_RUNTIME_DIR/niri-tile/mode`, default set by `defaultMode`), plus a local Noctalia plugin `local/tilemode` showing the mode at the far left of the bar. In tile mode the daemon writes `~/.local/state/niri-tile/animations.kdl` (included by niri.nix): move/resize/view animations off, new windows `open-focused false`, and `default-column-width` 1.0 on an empty workspace else 0.5 — so windows open at their final size. It talks to the niri socket directly (no `niri msg` subprocesses, no debounce) and only focuses a stack window once no tile is still drawn full-width (niri resizes on client redraw; focusing early scrolls the master off screen). These were each fixes for visible lag/flash — keep them.
 
 **nix/grub.nix** — GRUB with `efiInstallAsRemovable = true` and systemd-boot force-disabled. This is intentional — do not re-enable systemd-boot or set `canTouchEfiVariables = true`.
 

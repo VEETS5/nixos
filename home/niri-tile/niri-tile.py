@@ -31,7 +31,7 @@ SKIP_APPS = ("steam_app_", "gamescope", ".gamescope-wrapped")
 # Events that can change which windows exist or where they sit. Arranging is
 # idempotent, so the layout events our own resizes cause settle immediately.
 EVENTS = ("WindowOpenedOrChanged", "WindowClosed", "WindowsChanged",
-          "WindowLayoutsChanged")
+          "WindowLayoutsChanged", "WorkspaceActivated", "WorkspacesChanged")
 
 
 def get_mode():
@@ -120,7 +120,7 @@ def is_toast(w):
             and (w.get("title") or "").startswith("notificationtoasts"))
 
 
-def write_animations(mode):
+def write_animations(mode, empty=True):
     """Tile mode: no slide animations, so re-placing a new window is instant.
 
     niri includes this file (see home/niri.nix) and reloads it on change.
@@ -129,8 +129,9 @@ def write_animations(mode):
         return
     # New windows open unfocused so niri never scrolls the view toward the
     # new column (that one-frame jump was a full-screen flash); the daemon
-    # focuses them itself once they sit in the stack. They open full width so
-    # the first window on a workspace needs no resize; resizes snap anyway.
+    # focuses them itself once they sit in the stack. They open at the width
+    # they will end up with: full on an empty workspace, else half (so a new
+    # stack window can be focused at once, without waiting for a resize).
     body = ("animations {\n"
             "    window-movement { off; }\n"
             "    window-resize { off; }\n"
@@ -138,7 +139,7 @@ def write_animations(mode):
             "}\n"
             "window-rule {\n"
             "    open-focused false\n"
-            "    default-column-width { proportion 1.0; }\n"
+            f"    default-column-width {{ proportion {1.0 if empty else 0.5}; }}\n"
             "}\n") if mode == "tile" else ""
     try:
         with open(ANIM_FILE) as f:
@@ -199,6 +200,10 @@ class Daemon:
                     for wid in col:
                         niri.act("ResetWindowHeight", id=wid)
         wins = niri.windows()
+        if self.mode == "tile":
+            active = next((w["id"] for w in niri.request("Workspaces")["Workspaces"]
+                           if w.get("is_focused")), None)
+            write_animations(self.mode, empty=not layout(wins).get(active))
         if self.pending:
             focused = self.pending[0]
         if not any(w["id"] == focused for w in wins):
@@ -216,14 +221,14 @@ class Daemon:
                 niri.act("FocusWindow", id=focused)
             return
         # The target sits in the stack column. niri only resizes a window when
-        # the app redraws, so right after a change the column can still be
+        # the app redraws, so right after a change a column can still be
         # drawn full width; focusing into it then scrolls the view and pushes
-        # the master off screen. Hold focus on the master (which also scrolls
-        # the view back to the left edge) until the stack has shrunk.
-        stack = [w for w in wins if w["id"] in cols[1]]
+        # the master off screen. In that case hold focus on the master (which
+        # also scrolls the view back to the left edge) until the stack shrinks.
+        tiles = [w for w in wins if any(w["id"] in c for c in cols)]
         deadline = self.pending[1] if self.pending else time.monotonic() + 1.0
-        ready = all(self.shrunk(w) for w in stack)
-        if ws in moved or not ready:
+        ready = all(self.shrunk(w) for w in tiles)
+        if not ready:
             niri.act("FocusWindow", id=cols[0][0])
             now = cols[0][0]
         if ready or time.monotonic() > deadline:
