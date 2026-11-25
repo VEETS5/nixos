@@ -270,6 +270,26 @@
         "type": "github"
       }
     },
+    "nixman": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1795635797,
+        "narHash": "sha256-Pqq7El8EkzXYvDb6jw/oc1FhrI/NAhmFGq5pfyCI00Q=",
+        "owner": "VEETS5",
+        "repo": "nixman",
+        "rev": "b5847d0c31e6747e7f7eedf70e3fa792e57be587",
+        "type": "github"
+      },
+      "original": {
+        "owner": "VEETS5",
+        "repo": "nixman",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1793876309,
@@ -398,6 +418,7 @@
         "home-manager": "home-manager",
         "minegrub-theme": "minegrub-theme",
         "nixcord": "nixcord",
+        "nixman": "nixman",
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
         "proton-cachyos": "proton-cachyos",

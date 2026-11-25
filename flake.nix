@@ -24,6 +24,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     proton-cachyos.url = "github:powerofthe69/proton-cachyos-nix";
+    nixman = {
+      url = "github:VEETS5/nixman";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, stylix, nixvim, nixcord, ... }@inputs:
@@ -37,7 +41,7 @@
         ./hosts/${name}
         ./configuration.nix
         {
-          environment.systemPackages = [ self.packages.x86_64-linux.nixman ];
+          environment.systemPackages = [ inputs.nixman.packages.x86_64-linux.default ];
           # Lets nixman (and `nixos-version --configuration-revision`) show which
           # commit each generation was built from.
           system.configurationRevision = self.rev or self.dirtyRev or null;
@@ -59,8 +63,5 @@
   in
   {
     nixosConfigurations = nixpkgs.lib.genAttrs [ "nixpad" "nixtop" ] mkHost;
-
-    packages.x86_64-linux.nixman =
-      nixpkgs.legacyPackages.x86_64-linux.callPackage ./nixman/package.nix { };
   };
 }
