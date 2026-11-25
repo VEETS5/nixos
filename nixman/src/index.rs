@@ -75,7 +75,7 @@ impl Index {
         if q.is_empty() {
             return vec![];
         }
-        let mut hits: Vec<(u8, usize, usize)> = self
+        let mut hits: Vec<(bool, bool, u8, usize, usize)> = self
             .pkgs
             .iter()
             .enumerate()
@@ -91,10 +91,12 @@ impl Index {
                 } else {
                     return None;
                 };
-                Some((rank, p.attr.len(), i))
+                // Exact hits first, then top-level apps before nested library
+                // sets (haskellPackages.*, gnomeExtensions.*, python3xxPackages.*).
+                Some((rank != 0, p.attr.contains('.'), rank, p.attr.len(), i))
             })
             .collect();
         hits.sort();
-        hits.into_iter().take(limit).map(|h| h.2).collect()
+        hits.into_iter().take(limit).map(|h| h.4).collect()
     }
 }

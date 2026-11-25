@@ -397,6 +397,16 @@ impl App {
         });
     }
 
+    pub fn open_search(&mut self) {
+        self.ensure_index();
+        self.popup = Popup::Search { input: String::new(), results: vec![], sel: 0, target: sel(&self.list_state) };
+    }
+
+    /// Label of the list (for the host being viewed) that already has `attr`.
+    pub fn installed_in(&self, attr: &str) -> Option<String> {
+        self.lists.iter().find(|lv| lv.entries.iter().any(|e| e.name == attr)).map(|lv| lv.list.label())
+    }
+
     fn rerun_search(&mut self) {
         if let (Popup::Search { input, results, sel, .. }, Some(idx)) = (&mut self.popup, &self.index) {
             *results = idx.search(input, 200);
@@ -444,6 +454,7 @@ impl App {
         match k.code {
             KeyCode::Char('q') => return Action::Quit,
             KeyCode::Char('?') => self.popup = Popup::Help,
+            KeyCode::Char('/') => self.open_search(),
             KeyCode::Char(c @ '1'..='4') => self.tab = TABS[c as usize - '1' as usize].0,
             KeyCode::Tab => {
                 let i = TABS.iter().position(|t| t.0 == self.tab).unwrap();
@@ -507,10 +518,7 @@ impl App {
                     self.info(format!("editing lists for {}{note}", self.view_host));
                 }
             }
-            KeyCode::Char('a') | KeyCode::Char('/') => {
-                self.ensure_index();
-                self.popup = Popup::Search { input: String::new(), results: vec![], sel: 0, target: sel(&self.list_state) };
-            }
+            KeyCode::Char('a') => self.open_search(),
             KeyCode::Char('d') | KeyCode::Char('x') | KeyCode::Delete if self.focus == Focus::Entries => {
                 let li = sel(&self.list_state);
                 if let Some(e) = self.cur_list().entries.get(sel(&self.entry_state)) {

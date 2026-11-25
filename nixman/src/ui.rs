@@ -69,7 +69,7 @@ fn hints(app: &App) -> &'static str {
         Popup::Move { .. } => "↑↓ choose list · Enter move · Esc cancel",
         Popup::Help => "any key closes",
         Popup::None => match app.tab {
-            Tab::Packages => "a add · d remove · m move · H switch host · ←→ focus · 1-4 tabs · ? help · q quit",
+            Tab::Packages => "/ search · a add · d remove · m move · H switch host · ←→ focus · 1-4 tabs · ? help · q quit",
             Tab::Flake => "u update selected · U update all · ? help · q quit",
             Tab::System => "s switch · t test · B boot · b build+diff · R rollback · g gc · ? help",
             Tab::Git => "c commit · p push · P pull · f fetch · d diff · o open GitHub · ? help",
@@ -270,7 +270,8 @@ fn draw_popup(f: &mut Frame, app: &App) {
             let b = block(&title, true);
             let inner = b.inner(r);
             f.render_widget(b, r);
-            let [q, rest] = Layout::vertical([Constraint::Length(2), Constraint::Min(1)]).areas(inner);
+            let [q, rest, detail] =
+                Layout::vertical([Constraint::Length(2), Constraint::Min(1), Constraint::Length(5)]).areas(inner);
             f.render_widget(
                 Paragraph::new(vec![Line::from(vec![Span::styled("search: ", Style::new().fg(ACCENT)), Span::raw(format!("{input}▏"))])]),
                 q,
@@ -288,7 +289,13 @@ fn draw_popup(f: &mut Frame, app: &App) {
                         .iter()
                         .map(|&i| {
                             let p = &idx.pkgs[i];
+                            let mark = if app.installed_in(&p.attr).is_some() {
+                                Span::styled("✓ ", Style::new().fg(Color::Green).bold())
+                            } else {
+                                Span::raw("  ")
+                            };
                             ListItem::new(Line::from(vec![
+                                mark,
                                 Span::styled(format!("{:<34}", trunc(&p.attr, 33)), Style::new().bold()),
                                 Span::styled(format!("{:<14}", trunc(&p.version, 13)), Style::new().fg(Color::Green)),
                                 Span::styled(p.description.clone(), Style::new().fg(Color::DarkGray)),
@@ -303,6 +310,23 @@ fn draw_popup(f: &mut Frame, app: &App) {
                     } else {
                         let mut st = ListState::default().with_selected(Some(*sel));
                         f.render_stateful_widget(List::new(items).highlight_style(hl()), rest, &mut st);
+                        if let Some(p) = results.get(*sel).map(|&i| &idx.pkgs[i]) {
+                            let status = match app.installed_in(&p.attr) {
+                                Some(l) => Span::styled(format!("installed · {l}"), Style::new().fg(Color::Green)),
+                                None => Span::styled(format!("Enter adds to {}", app.lists[*target].list.label()), Style::new().fg(Color::DarkGray)),
+                            };
+                            let desc = if p.description.is_empty() { "(no description)".to_string() } else { p.description.clone() };
+                            let lines = vec![
+                                Line::from(vec![Span::styled(format!("{}  {}   ", p.attr, p.version), Style::new().bold().fg(ACCENT)), status]),
+                                Line::raw(desc),
+                            ];
+                            let b = Block::new().borders(ratatui::widgets::Borders::TOP).border_style(Style::new().fg(Color::DarkGray));
+                            f.render_widget(Paragraph::new(lines).wrap(Wrap { trim: true }).block(b), detail);
+                        }
+                        if !results.is_empty() {
+                            let count = format!("{} match{}", results.len(), if results.len() == 1 { "" } else { "es" });
+                            f.render_widget(Paragraph::new(count).fg(Color::DarkGray).alignment(ratatui::layout::Alignment::Right), q);
+                        }
                     }
                 }
             }
@@ -313,6 +337,7 @@ fn draw_popup(f: &mut Frame, app: &App) {
 const HELP: &str = "\
 Global
   1-4 / Tab      switch tab            r   refresh + git fetch
+  /              search nixpkgs (from any tab)
   ?              this help             q   quit
 
 Packages

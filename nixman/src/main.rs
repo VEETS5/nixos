@@ -20,6 +20,7 @@ nixman — manage this NixOS flake: packages, flake inputs, rebuilds, git
 
 usage:
   nixman                         open the TUI
+  nixman search QUERY            search nixpkgs (✓ = already in your config)
   nixman ls [--host H]           print package lists that apply to a host
   nixman add ATTR [--host H] [--home]
                                  add a package (default: shared system list)
@@ -67,6 +68,40 @@ fn cli(repo: &repo::Repo, a: &Args) -> Result<()> {
     }
     let all = repo.lists_for(&host);
     match a.cmd.as_deref() {
+        Some("search") => {
+            let q = a.attr.as_deref().context("usage: nixman search QUERY")?;
+            let inputs = flake::read(&repo.dir)?;
+            let rev = flake::nixpkgs_rev(&inputs).context("flake has no nixpkgs input")?;
+            if !repo::cache_dir().join(format!("nixpkgs-{rev}.json")).exists() {
+                eprintln!("building package index for this nixpkgs (about a minute, once)…");
+            }
+            let idx = index::load_or_build(&repo.dir, &rev)?;
+            let mut have = std::collections::HashMap::new();
+            for l in &all {
+                for e in lists::load(l)?.entries {
+                    have.entry(e.name).or_insert(l.label());
+                }
+            }
+            let hits = idx.search(q, 40);
+            if hits.is_empty() {
+                println!("no matches for {q}");
+            }
+            use std::io::{IsTerminal, Write};
+            let tty = std::io::stdout().is_terminal();
+            let (b, g, r) = if tty { ("\x1b[1m", "\x1b[32m", "\x1b[0m") } else { ("", "", "") };
+            let mut out = std::io::stdout().lock();
+            for i in hits {
+                let p = &idx.pkgs[i];
+                let mark = if have.contains_key(&p.attr) { "✓" } else { " " };
+                let desc: String = p.description.chars().take(80).collect();
+                let ver: String = p.version.chars().take(13).collect();
+                // Stop quietly if the reader (e.g. `head`) goes away.
+                if writeln!(out, "{g}{mark}{r} {b}{:<32}{r} {g}{ver:<14}{r} {desc}", p.attr).is_err() {
+                    break;
+                }
+            }
+            Ok(())
+        }
         Some("ls") => {
             for l in &all {
                 let p = lists::load(l)?;
