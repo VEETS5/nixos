@@ -29,11 +29,12 @@
     }
 
     ${if isDesktop then ''
-    output "DP-1" {
+    // matched by make/model/serial, not connector: DP-n names swap between boots
+    output "Samsung Electric Company LC27G7xT H4ZT400947" {
       mode "2560x1440@240"
       position x=0 y=0
     }
-    output "DP-3" {
+    output "Dell Inc. DELL P2425E DHL8204" {
       mode "1920x1200@99.997"
       position x=2560 y=0
     }

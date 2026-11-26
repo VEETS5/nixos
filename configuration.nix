@@ -84,6 +84,11 @@ in
   # Blackholing them locally makes the requests fail fast → smooth 60 fps.
   networking.hosts."127.0.0.1" = [ "nba2k14.pc.2ksports.com" "ns.take2games.com" ];
 
+  # Calibre → jailbroken Kindle (KOReader): 8080 content server, 8908 wireless
+  # device connection (set in calibre's Smart Device settings), UDP = auto-discovery.
+  networking.firewall.allowedTCPPorts = [ 8080 8908 ];
+  networking.firewall.allowedUDPPorts = [ 54982 48123 39001 44044 59678 ];
+
   # Pin the ethernet NIC (RTL8126A) to gigabit-only autonegotiation. Gigabit link
   # training on this cable is marginal — it takes two attempts and ~8s to settle.
   # The Realtek PHY counts failed attempts and then "downshifts": it gives up and
@@ -143,7 +148,7 @@ in
   };
 
   environment.sessionVariables = {
-    LIBVA_DRIVER_NAME  = if gpuType == "intel" then "iHD" else "";
+    LIBVA_DRIVER_NAME  = if gpuType == "intel" then "iHD" else "radeonsi"; # empty string breaks VAAPI (libva looks for "_drv_video.so")
     NIXOS_OZONE_WL     = "1";
     MOZ_ENABLE_WAYLAND = "1";
     # Force GTK apps (Steam, etc.) to route their file dialogs through the xdg
@@ -277,6 +282,9 @@ in
   # tailscale
   services.tailscale.enable = true;
 
+  # MTP access (Kindle etc.) for the logged-in user without root
+  services.udev.packages = [ pkgs.libmtp.out ]; # .out holds lib/udev; default output is bin
+
   # ── System packages ─────────────────────────────────────────────────────────
   environment.systemPackages = with pkgs; [
     git
@@ -319,6 +327,7 @@ in
     bubblewrap
     pince
     herdr             # terminal workspace manager for AI coding agents
+    calibre           # ebook manager; sends books to the Kindle over USB/MTP
   ];
   
   system.stateVersion = "25.11";

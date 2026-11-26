@@ -34,6 +34,7 @@
     kdePackages.qtsvg            # SVG rendering for KDE app icons/thumbnails
     haruna
     qbittorrent       # BitTorrent client
+    parsec-bin        # Parsec remote desktop/game streaming client
     shared-mime-info
     gimp
     grim
@@ -62,6 +63,17 @@
     # (only loses realtime scheduling priority). Used in FH6 launch options.
     (writeShellScriptBin "gamescope-nocap" ''
       exec ${gamescope}/bin/gamescope "$@"
+    '')
+    # RED MC (NBA 2K13/2K14 roster editor) run inside the same umu prefix and
+    # Proton Heroic uses for 2K14, so it sees the real Saves folder.
+    # Extract the RED MC zip (NLSC forum download, login required) into ~/Games/REDMC.
+    (writeShellScriptBin "redmc" ''
+      exe=$(find "$HOME/Games/REDMC" -maxdepth 3 -iname '*.exe' -print -quit 2>/dev/null)
+      [ -n "$exe" ] || { echo "No .exe in ~/Games/REDMC - extract the RED MC zip there" >&2; exit 1; }
+      cd "$(dirname "$exe")"
+      WINEPREFIX="$HOME/Games/Heroic/Prefixes/NBA2K14" \
+      PROTONPATH="$HOME/.config/heroic/tools/proton/Proton-CachyOS-latest" \
+      GAMEID=umu-0 exec ${umu-launcher}/bin/umu-run "$exe" "$@"
     '')
   ];
 
